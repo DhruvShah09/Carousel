@@ -167,7 +167,10 @@ def login_query(username,password):
         return True
     else:
         return False
-
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    error = None
+    return render_template('signup.html')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
