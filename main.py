@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import csv
 import time
+from tempfile import NamedTemporaryFile
+import shutil
 from datetime import datetime
 import random as rng
 from flask import Flask, request, jsonify, render_template, redirect, url_for,session
@@ -10,9 +12,12 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for,se
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 app.secret_key = "bcasbhd31231923unazcnqbndubqsiubf"
+
 #database stuff
 current_ids = []
-df = pd.read_csv(r'user data.csv')
+filename = r'user_data.csv'
+
+df = pd.read_csv(filename)
 data_col1 = pd.DataFrame(df, columns = ['ID']).to_numpy()
 data_col2 = pd.DataFrame(df, columns = ['Username']).to_numpy()
 for x in range(data_col1.size):
@@ -23,9 +28,10 @@ del data_col1
 del data_col2
 
 current_events = []
-data = pd.read_csv(r'user data.csv').to_numpy()
+data = pd.read_csv(filename).to_numpy()
 
 temp_str = ""
+temp_arr = []
 temp_index = -1
 row_ = -1
 
@@ -69,18 +75,23 @@ def new_user(username,password,name,year,classes):
     while id in current_ids:
         id = rng.randrange(99999999)
     temp_str = str(id) + "," + username + "," + password + "," + name + "," + str(year) + "," + str(classes)
-    with open(r'user data.csv','a') as fs:
+    with open(filename,'a') as fs:
         fs.write(temp_str)
-    data = pd.read_csv(r'user data.csv').to_numpy()
+    data = pd.read_csv(filename).to_numpy()
     current_ids.append([int(data.size/6-1),id,username])
 
-def edit_user(id,str):
-    input = open(r'user data.csv','rb')
-    output = open(r'user data edit.csv','wb')
-    writer = csv.writer(output)
-    for row in csv.reader(input):
-        if row[0] != str(id):
+def edit_user(id,arr):
+    tempfile = NamedTemporaryFile('w+t', newline='', delete=False)
+    with open(filename, 'r', newline='') as csvFile, tempfile:
+        reader = csv.reader(csvFile, delimiter=',', quotechar='"')
+        writer = csv.writer(tempfile, delimiter=',', quotechar='"')
+
+        for row in reader:
+            if row[0] == str(id):
+                row = arr
             writer.writerow(row)
+
+    shutil.move(tempfile.name, filename)
 
 def change_classes(id,new_classes):
     for x in range(len(current_ids)):
@@ -97,6 +108,21 @@ def classes_to_str(classes):
 
 def new_event(name,start_time,end_time,class_,owner,location):
     current_events.append(Event(name,start_time,end_time,class_,owner,location))
+
+def search_events(start_time,class_):
+    global temp_arr
+    temp_arr = []
+    if start_time == None or class_ == None:
+        return None
+    for x in current_events:
+        if start_time <= x.start_time and x.class_ == class_:
+            temp_arr.append(x)
+    return temp_arr
+
+def find_user(name):
+    for x in range(len(current_ids)):
+        if name in current_ids[x]:
+            return User(current_ids[x][0])
 
 def login_query(username,password):
     global temp_index
@@ -130,15 +156,23 @@ def login():
 #jk = User(00000000)
 #print(jk)
 
-#new_event("Linear Algebra Cram",1634970424,1634973424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#new_event("Linear Algebra Cram 1",1634970424,1634973424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#new_event("Linear Algebra Cram 2",1634971424,1634974424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#new_event("Linear Algebra Cram 3",1634961424,1634964424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#new_event("Linear Algebra Cram 4",1634981424,1634984424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+
+#print(search_events(1634970424,"MATH 1554"))
 #print(current_events[-1])
 
 #test loginquery
 #print(loginQuery("jkeller44@gatech.edu", "dumbass45"))
 
 #new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
+
+#edit_user(57579823,[57579823,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101"])
+
 #print(current_ids)
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+    #app.run(threaded=True, port=5000)
