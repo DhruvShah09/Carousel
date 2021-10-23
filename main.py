@@ -6,12 +6,14 @@ import random as rng
 
 current_ids = []
 df = pd.read_csv(r'user data.csv')
-data_col = pd.DataFrame(df, columns = ['ID']).to_numpy()
-for x in range(data_col.size):
-    current_ids.append(int(data_col[x][0]))
+data_col1 = pd.DataFrame(df, columns = ['ID']).to_numpy()
+data_col2 = pd.DataFrame(df, columns = ['Username']).to_numpy()
+for x in range(data_col1.size):
+    current_ids.append([data_col1[x][0],data_col2[x][0]])
 print(current_ids)
 del df
-del data_col
+del data_col1
+del data_col2
 
 temp_str = ""
 
@@ -53,7 +55,7 @@ def new_user(username,password,name,year,classes):
         id = rng.randrange(99999999)
     temp_str = str(id) + "," + username + "," + password + "," + name + "," + str(year) + "," + str(classes)
     with open('user data.csv','a') as fs:
-        fs.write(temp_str[:-1])
+        fs.write(temp_str)
 
 def classes_to_str(classes):
     global temp_str
@@ -69,4 +71,4 @@ print(jk)
 evt1 = Event(1634956422,"Hack GT","CS 1331",jk,"Klaus")
 print(evt1)
 
-new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"]))
+new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
