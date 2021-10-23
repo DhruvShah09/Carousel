@@ -15,7 +15,7 @@ app.secret_key = "bcasbhd31231923unazcnqbndubqsiubf"
 
 #database stuff
 current_ids = []
-filename = r'user data.csv'
+filename = r'user_data.csv'
 
 df = pd.read_csv(filename)
 data_col1 = pd.DataFrame(df, columns = ['ID']).to_numpy()
@@ -31,6 +31,7 @@ current_events = []
 data = pd.read_csv(filename).to_numpy()
 
 temp_str = ""
+temp_arr = []
 temp_index = -1
 row_ = -1
 
@@ -108,6 +109,21 @@ def classes_to_str(classes):
 def new_event(name,start_time,end_time,class_,owner,location):
     current_events.append(Event(name,start_time,end_time,class_,owner,location))
 
+def search_events(start_time,class_):
+    global temp_arr
+    temp_arr = []
+    if start_time == None or class_ == None:
+        return None
+    for x in current_events:
+        if start_time <= x.start_time and x.class_ == class_:
+            temp_arr.append(x)
+    return temp_arr
+
+def find_user(name):
+    for x in range(len(current_ids)):
+        if name in current_ids[x]:
+            return User(current_ids[x][0])
+
 def login_query(username,password):
     global temp_index
     global data
@@ -140,7 +156,12 @@ def login():
 #jk = User(00000000)
 #print(jk)
 
-#new_event("Linear Algebra Cram",1634970424,1634973424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#new_event("Linear Algebra Cram 1",1634970424,1634973424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#new_event("Linear Algebra Cram 2",1634971424,1634974424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#new_event("Linear Algebra Cram 3",1634961424,1634964424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#new_event("Linear Algebra Cram 4",1634981424,1634984424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+
+#print(search_events(1634970424,"MATH 1554"))
 #print(current_events[-1])
 
 #test loginquery
