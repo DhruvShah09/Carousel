@@ -108,6 +108,7 @@ def login():
         else:
             error = 'Invalid Credentials'
             return "Error Logging In"
+    return render_template('templates/login.html')
 
 #Testing code
 #jk = User(00000000)
@@ -118,6 +119,6 @@ def login():
 
 #new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
 
-#if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
-    #app.run(threaded=True, port=5000)
+if __name__ == '__main__':
+    #Threaded option to enable multiple instances for multiple user access support
+    app.run(threaded=True, port=5000)
