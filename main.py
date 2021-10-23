@@ -167,8 +167,7 @@ def login_query(username,password):
         return True
     else:
         return False
-<<<<<<< HEAD
-=======
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
@@ -186,7 +185,6 @@ def signup():
                 inp_class_string = inp_class_string + str(inp_class[i])
         new_user(inp_username,inp_password,inp_name,inp_year,inp_class_string)
     return render_template('signup.html')
->>>>>>> 4b72dc8a99e7087774fe34fd9e4792b395fa17d4
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
