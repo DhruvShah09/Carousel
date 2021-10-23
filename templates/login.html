@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Carousel</title>
+	<title>GT Carousel | Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -33,10 +33,21 @@
 		<div class="container-login100" style="background-image:url({{url_for('static', filename='images_lg/bobby-dodd-stadium.jpg')}})">
 			<div class="wrap-login100">
 				<form class="login100-form validate-form">
+					{% block content %}
+					<div class="container">
+						{% for message in get_flashed_messages() %}
+						<div class="alert alert-warning">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							{{ message }}
+						</div>
+						{% endfor %}
+	
+						{% block page_content %}{% endblock %}
+					</div>
+					{% endblock %}
 					<span class="login100-form-logo">
 						<img src="{{url_for('static', filename='images_lg/icons/carousel-icon.png')}}" alt="Carousel" width="70" height="70">
 					</span>
-
 					<span class="login100-form-title p-b-34 p-t-27">
 						Log in
 					</span>
@@ -70,7 +81,7 @@
 					</div>
 				</form>
 				<div class="container-newuser100-form-btn2">
-					<a href = "../SignUp/index.html"><button class="newuser100-form-btn2">
+					<a href = "signup"><button class="newuser100-form-btn2">
 						New User? Create Account
 					</button>
 				</div>
