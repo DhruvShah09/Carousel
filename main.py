@@ -36,8 +36,9 @@ class User:
         return str(self.id) + ", " + self.username + ", " + self.password + ", " + self.name + ", " + str(self.year) + ", " + str(self.classes)
 
 class Event:
-    def __init__(self,time,name,class_,owner,location):
-        self.time = time
+    def __init__(self,start_time,end_time,name,class_,owner,location):
+        self.start_time = start_time
+        self.end_time = end_time
         self.name = name
         self.class_ = class_
         self.people = [owner]
