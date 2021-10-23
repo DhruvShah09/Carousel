@@ -1,3 +1,3 @@
-ID,Username,Password,Name,Year,Classes
-0,jkeller45@gatech.edu,123456789,James Keller,1,MATH 1554:ENGL 1101:PSYC 1101:CS 1331:CS 1100
-57579823,jkeller44@gatech.edu,dumbass45,Jack Keller,1,MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101
+ID,Username,Password,Name,Year,Classes,Events
+0,jkeller45@gatech.edu,123456789,James Keller,1,MATH 1554:ENGL 1101:PSYC 1101:CS 1331:CS 1100,
+57579823,jkeller44@gatech.edu,dumbass45,Jack Keller,1,MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101,

@@ -47,12 +47,17 @@ class User:
         self.name = str(data[row][3])
         self.year = data[row][4]
         self.classes = data[row][5].split(":")
+        self.events = str(data[row][6]).split(":")
 
     def __str__(self):
         return str(self.id) + ", " + self.username + ", " + self.password + ", " + self.name + ", " + str(self.year) + ", " + str(self.classes)
 
 class Event:
     def __init__(self,name,start_time,end_time,class_,owner,location):
+        self.id = int(rng.randrange(999999))
+        for x in current_events:
+            if x.id == id:
+                self.id = int(rng.randrange(999999))
         self.name = name
         self.start_time = start_time
         self.end_time = end_time
@@ -71,9 +76,9 @@ def new_user(username,password,name,year,classes):
     global temp_str
     global data
     temp_str = ""
-    id = rng.randrange(99999999)
+    id = int(rng.randrange(99999999))
     while id in current_ids:
-        id = rng.randrange(99999999)
+        id = int(rng.randrange(99999999))
     temp_str = str(id) + "," + username + "," + password + "," + name + "," + str(year) + "," + str(classes)
     with open(filename,'a') as fs:
         fs.write(temp_str)
@@ -92,6 +97,17 @@ def edit_user(id,arr):
             writer.writerow(row)
 
     shutil.move(tempfile.name, filename)
+
+def add_event_to_user(id,arr,event):
+    global temp_arr
+    arr[6] = str(arr[6])
+    temp_arr = arr
+    if temp_arr[6] == None or temp_arr[6] == "nan":
+        temp_arr[6] = str(event)
+        edit_user(id,temp_arr)
+    else:
+        temp_arr[6] += ":" + str(event)
+        edit_user(id,temp_arr)
 
 def change_classes(id,new_classes):
     for x in range(len(current_ids)):
@@ -123,6 +139,21 @@ def find_user(name):
     for x in range(len(current_ids)):
         if name in current_ids[x]:
             return User(current_ids[x][0])
+
+def get_event_ids(user):
+    return data[user][6]
+
+def push_event(events,num):
+    if events == []:
+        return None
+    return events[num]
+
+def join_event(user_id,event):
+    for x in range(len(current_ids)):
+        if user_id in current_ids[x]:
+            add_event_to_user(user_id,data[current_ids[x][0]],event.id)
+            event.people.append(user_id)
+            event.people_names.append(data[current_ids[x][0]][3])
 
 def login_query(username,password):
     global temp_index
@@ -169,10 +200,13 @@ def login():
 
 #new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
 
-#edit_user(57579823,[57579823,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101"])
+#join_event(57579823,current_events[0])
+#print(current_events[0])
+
+#edit_user(57579823,[57579823,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101",get_event_ids(find_user("jkeller44@gatech.edu")))
 
 #print(current_ids)
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    #app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000)
