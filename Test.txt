@@ -1,8 +1,5 @@
 Hello
 
-<<<<<<< HEAD
-sup
-=======
 g
 
->>>>>>> 2087273dc44cc4fa9abf1898da3b62f83060dd2b
+sup
