@@ -3,7 +3,11 @@ import pandas as pd
 import time
 from datetime import datetime
 import random as rng
+from flask import Flask, request, jsonify, render_template, redirect, url_for,session
 
+#flask app
+app = Flask(__name__)
+#database stuff
 current_ids = []
 df = pd.read_csv(r'user data.csv')
 data_col1 = pd.DataFrame(df, columns = ['ID']).to_numpy()
@@ -66,6 +70,25 @@ def classes_to_str(classes):
         temp_str += ":"
     return temp_str
 
+def loginQuery(username,password):
+    pass
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        userName = request.form['username']
+        pwd = request.form['password']
+        if loginQuery(userName, pwd):
+            session['login_state'] = True
+            session['user_id'] = userName
+            return redirect(url_for('home'))
+        else:
+            error = 'Invalid Credentials'
+        return render_template('login.html', error=error)
+
+
+
+#Testing code
 jk = User(00000000)
 print(jk)
 
