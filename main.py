@@ -7,6 +7,8 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for,se
 
 #flask app
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+app.secret_key = "bcasbhd31231923unazcnqbndubqsiubf"
 #database stuff
 current_ids = []
 df = pd.read_csv(r'user data.csv')
@@ -14,13 +16,13 @@ data_col1 = pd.DataFrame(df, columns = ['ID']).to_numpy()
 data_col2 = pd.DataFrame(df, columns = ['Username']).to_numpy()
 for x in range(data_col1.size):
     current_ids.append([data_col1[x][0],data_col2[x][0]])
-print(current_ids)
+#print(current_ids)
 del df
 del data_col1
 del data_col2
 
 temp_str = ""
-temp_index = -1;
+temp_index = -1
 
 class User:
     def __init__(self,id):
@@ -28,7 +30,7 @@ class User:
         data_col = pd.DataFrame(df, columns = ['ID']).to_numpy()
         data = df.to_numpy()
         for x in range(data_col.size):
-            if data_col[x][0] == 0:
+            if data_col[x][0] == id:
                 row = x
         self.id = data[row][0]
         self.username = str(data[row][1])
@@ -73,17 +75,20 @@ def classes_to_str(classes):
 
 def loginQuery(username,password):
     global temp_index
-    temp_index = -1;
-    df = pd.read_csv(r'user data.csv')
+    temp_index = -1
+    for x in range(len(current_ids)):
+        if username in current_ids[x]:
+            temp_index = x
+    df = pd.read_csv('user data.csv')
     data_col = pd.DataFrame(df, columns = ['ID']).to_numpy()
     data = df.to_numpy()
     for x in range(data_col.size):
-        if data_col[x][0] == 0:
+        if data_col[x][0] == current_ids[x][0]:
             row = x
     if data[row][2] == password and data[row][1] == username:
-        pass True
+        return True
     else:
-        pass False
+        return False
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -94,18 +99,25 @@ def login():
         if loginQuery(userName, pwd):
             session['login_state'] = True
             session['user_id'] = userName
-            return redirect(url_for('home'))
+            return "Succesfully Logged In"
         else:
             error = 'Invalid Credentials'
-        return render_template('login.html', error=error)
+            return "Error Logging In"
+        
 
 
 
 #Testing code
-jk = User(00000000)
-print(jk)
+#jk = User(00000000)
+#print(jk)
 
-evt1 = Event(1634956422,1634966422,"Hack GT","CS 1331",jk,"Klaus")
-print(evt1)
+#test loginquery
+#print(loginQuery("jkeller44@gatech.edu", "dumbass45"))
+#evt1 = Event(1634956422,1634966422,"Hack GT","CS 1331",jk,"Klaus")
+#print(evt1)
 
 #new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
+
+if __name__ == '__main__':
+    # Threaded option to enable multiple instances for multiple user access support
+    app.run(threaded=True, port=5000)
