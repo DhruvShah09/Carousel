@@ -408,6 +408,7 @@ input {
   display: inline-block;
   position: relative;
   padding-left: 30px;
+  padding-right: 30px;
   cursor: pointer;
   font-size: 16px;
   color: #666;
