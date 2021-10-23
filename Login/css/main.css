@@ -191,6 +191,7 @@ iframe {
 
 .wrap-login100 {
   width: 500px;
+  height: 675px;
   border-radius: 10px;
   overflow: hidden;
   padding: 55px 55px 37px 55px;
@@ -463,6 +464,7 @@ iframe {
   min-width: 120px;
   height: 50px;
   border-radius: 25px;
+  margin-top: -150px;
 
   background: #ffff;
   /*background: -webkit-linear-gradient(top,#003057, rgb(182, 182, 182), #B3A369);*/
@@ -486,6 +488,7 @@ iframe {
   background-color: #003057;
   top: 0;
   left: 0;
+
   opacity: 1;
 
   -webkit-transition: all 0.4s;
