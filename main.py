@@ -6,7 +6,7 @@ from tempfile import NamedTemporaryFile
 import shutil
 from datetime import datetime
 import random as rng
-from flask import Flask, request, jsonify, render_template, redirect, url_for,session
+from flask import Flask, request, jsonify, render_template, redirect, url_for,session,flash
 
 #flask app
 app = Flask(__name__)
@@ -81,7 +81,7 @@ def new_user(username,password,name,year,classes):
         id = int(rng.randrange(99999999))
     temp_str = str(id) + "," + username + "," + password + "," + name + "," + str(year) + "," + str(classes)
     with open(filename,'a') as fs:
-        fs.write(temp_str)
+        fs.write(temp_str+"\n")
     data = pd.read_csv(filename).to_numpy()
     current_ids.append([int(data.size/6-1),id,username])
 
@@ -167,6 +167,26 @@ def login_query(username,password):
         return True
     else:
         return False
+<<<<<<< HEAD
+=======
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    error = None
+    if request.method == 'POST':
+        inp_name = request.form['name']
+        inp_username = request.form['username']
+        inp_password = request.form['password']
+        inp_year = request.form['checkbox']
+        inp_class = request.form.getlist('class')
+        inp_class_string = ""
+        for i in range(len(inp_class)):
+            if i < len(inp_class)-1:
+                inp_class_string = inp_class_string + str(inp_class[i]) + ":"
+            else:
+                inp_class_string = inp_class_string + str(inp_class[i])
+        new_user(inp_username,inp_password,inp_name,inp_year,inp_class_string)
+    return render_template('signup.html')
+>>>>>>> 4b72dc8a99e7087774fe34fd9e4792b395fa17d4
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -180,7 +200,7 @@ def login():
             return "Succesfully Logged In"
         else:
             error = 'Invalid Credentials'
-            return "Error Logging In"
+            flash(error)
     return render_template('login.html')
 
 #Testing code
