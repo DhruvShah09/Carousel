@@ -170,7 +170,15 @@ def login_query(username,password):
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
+    if request.method == 'POST':
+        inp_name = request.form['name']
+        inp_username = request.form['username']
+        inp_password = request.form['password']
+        inp_year = request.form['checkbox']
+        inp_class = request.form.getlist('class')
+        new_user(inp_username, inp_password, inp_name, inp_year, inp_class)
     return render_template('signup.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
