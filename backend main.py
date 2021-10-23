@@ -1,6 +1,6 @@
 import numpy as np
 
-class Event:
+class User:
     username = ""
     password = ""
     name = ""
