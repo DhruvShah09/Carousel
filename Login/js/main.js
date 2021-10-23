@@ -83,5 +83,10 @@
         
     });
 
+    /*==================================================================
+    [ AutoComplete Select Options ]*/
+    $(document).ready(function() {
+        $('.rs-select2 js-select-simple select--no-search').select2();
+    });
 
 })(jQuery);
