@@ -81,7 +81,7 @@ def new_user(username,password,name,year,classes):
         id = int(rng.randrange(99999999))
     temp_str = str(id) + "," + username + "," + password + "," + name + "," + str(year) + "," + str(classes)
     with open(filename,'a') as fs:
-        fs.write(temp_str)
+        fs.write(temp_str+"\n")
     data = pd.read_csv(filename).to_numpy()
     current_ids.append([int(data.size/6-1),id,username])
 
@@ -176,7 +176,13 @@ def signup():
         inp_password = request.form['password']
         inp_year = request.form['checkbox']
         inp_class = request.form.getlist('class')
-        new_user(inp_username, inp_password, inp_name, inp_year, inp_class)
+        inp_class_string = ""
+        for i in range(len(inp_class)):
+            if i < len(inp_class)-1:
+                inp_class_string = inp_class_string + str(inp_class[i]) + ":"
+            else:
+                inp_class_string = inp_class_string + str(inp_class[i])
+        new_user(inp_username,inp_password,inp_name,inp_year,inp_class_string)
     return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
