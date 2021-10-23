@@ -20,6 +20,7 @@ del data_col1
 del data_col2
 
 temp_str = ""
+temp_index = -1;
 
 class User:
     def __init__(self,id):
@@ -71,7 +72,19 @@ def classes_to_str(classes):
     return temp_str
 
 def loginQuery(username,password):
-    pass
+    global temp_index
+    temp_index = -1;
+    df = pd.read_csv(r'user data.csv')
+    data_col = pd.DataFrame(df, columns = ['ID']).to_numpy()
+    data = df.to_numpy()
+    for x in range(data_col.size):
+        if data_col[x][0] == 0:
+            row = x
+    if data[row][2] == password and data[row][1] == username:
+        pass True
+    else:
+        pass False
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -95,4 +108,4 @@ print(jk)
 evt1 = Event(1634956422,1634966422,"Hack GT","CS 1331",jk,"Klaus")
 print(evt1)
 
-new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
+#new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
