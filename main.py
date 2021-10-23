@@ -79,7 +79,7 @@ def new_user(username,password,name,year,classes):
     id = int(rng.randrange(99999999))
     while id in current_ids:
         id = int(rng.randrange(99999999))
-    temp_str = str(id) + "," + username + "," + password + "," + name + "," + str(year) + "," + str(classes)
+    temp_str = str(id) + "," + username + "," + password + "," + name + "," + str(year) + "," + str(classes) + ","
     with open(filename,'a') as fs:
         fs.write(temp_str+"\n")
     data = pd.read_csv(filename).to_numpy()
