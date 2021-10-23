@@ -21,7 +21,7 @@
     [ Validate ]*/
     var input = $('.validate-input .input100');
 
-    $('.validate-form').on("login100-form-btn",function(){
+    $('.validate-form').on('submit',function(){
         var check = true;
 
         for(var i=0; i<input.length; i++) {
@@ -35,7 +35,7 @@
     });
 
 
-    $('.validate-form .input100').each(function(){
+    $('.validate-form.container-login100-form-btn .input100').on(click, function(){
         $(this).focus(function(){
            hideValidate(this);
         });
