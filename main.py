@@ -46,7 +46,7 @@ class Event:
         self.location = location
 
     def __str__(self):
-        return str(self.name) + ": " + str(datetime.utcfromtimestamp(self.time).strftime('%Y-%m-%d %H:%M:%S')) + ", Class: " + self.class_ + ", Partipants: " + str(self.people_names) + ", Location: " + self.location
+        return str(self.name) + ": " + str(datetime.utcfromtimestamp(self.start_time).strftime('%Y-%m-%d %H:%M:%S')) + " to " + str(datetime.utcfromtimestamp(self.end_time).strftime('%Y-%m-%d %H:%M:%S')) + ", Class: " + self.class_ + ", Partipants: " + str(self.people_names) + ", Location: " + self.location
 
 def new_user(username,password,name,year,classes):
     global temp_str
@@ -69,7 +69,7 @@ def classes_to_str(classes):
 jk = User(00000000)
 print(jk)
 
-evt1 = Event(1634956422,"Hack GT","CS 1331",jk,"Klaus")
+evt1 = Event(1634956422,1634966422,"Hack GT","CS 1331",jk,"Klaus")
 print(evt1)
 
 new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
