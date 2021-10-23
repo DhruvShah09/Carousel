@@ -6,7 +6,7 @@ from tempfile import NamedTemporaryFile
 import shutil
 from datetime import datetime
 import random as rng
-from flask import Flask, request, jsonify, render_template, redirect, url_for,session
+from flask import Flask, request, jsonify, render_template, redirect, url_for,session,flash
 
 #flask app
 app = Flask(__name__)
@@ -197,7 +197,7 @@ def login():
             return "Succesfully Logged In"
         else:
             error = 'Invalid Credentials'
-            return "Error Logging In"
+            flash(error)
     return render_template('login.html')
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
