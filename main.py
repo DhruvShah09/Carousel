@@ -125,6 +125,9 @@ def login():
             error = 'Invalid Credentials'
             return "Error Logging In"
     return render_template('login.html')
+@app.route('/forgot', methods=['GET', 'POST'])
+def forgot():
+    return render_template('forgot.html')
 
 #Testing code
 #jk = User(00000000)
