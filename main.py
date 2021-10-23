@@ -21,6 +21,8 @@ del df
 del data_col1
 del data_col2
 
+current_events = []
+
 temp_str = ""
 temp_index = -1
 
@@ -43,12 +45,12 @@ class User:
         return str(self.id) + ", " + self.username + ", " + self.password + ", " + self.name + ", " + str(self.year) + ", " + str(self.classes)
 
 class Event:
-    def __init__(self,start_time,end_time,name,class_,owner,location):
+    def __init__(self,name,start_time,end_time,class_,owner,location):
+        self.name = name
         self.start_time = start_time
         self.end_time = end_time
-        self.name = name
         self.class_ = class_
-        self.people = [owner]
+        self.people = [owner.id]
         self.people_names = [owner.name]
         self.location = location
 
@@ -72,6 +74,9 @@ def classes_to_str(classes):
         temp_str += classes[x]
         temp_str += ":"
     return temp_str
+
+def new_event(name,start_time,end_time,class_,owner,location):
+    current_events.append(Event(name,start_time,end_time,class_,owner,location))
 
 def loginQuery(username,password):
     global temp_index
@@ -103,9 +108,6 @@ def login():
         else:
             error = 'Invalid Credentials'
             return "Error Logging In"
-        
-
-
 
 #Testing code
 #jk = User(00000000)
@@ -113,11 +115,9 @@ def login():
 
 #test loginquery
 #print(loginQuery("jkeller44@gatech.edu", "dumbass45"))
-#evt1 = Event(1634956422,1634966422,"Hack GT","CS 1331",jk,"Klaus")
-#print(evt1)
 
 #new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+    #app.run(threaded=True, port=5000)
