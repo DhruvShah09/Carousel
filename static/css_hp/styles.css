@@ -7831,7 +7831,7 @@ textarea.form-control-lg {
 
 .bg-header {
   --bs-bg-opacity: 1;
-  background-image: url(../../images/carousel.gif); 
+  background-image: url(../images_hp/carousel.gif); 
   background-position: center;
   width:auto;
   height: 500px;
