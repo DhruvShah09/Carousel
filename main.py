@@ -27,6 +27,7 @@ data = pd.read_csv(r'user data.csv').to_numpy()
 
 temp_str = ""
 temp_index = -1
+row_ = -1
 
 class User:
     def __init__(self,id):
@@ -100,11 +101,12 @@ def new_event(name,start_time,end_time,class_,owner,location):
 def login_query(username,password):
     global temp_index
     global data
+    global row_
     temp_index = -1
     for x in range(len(current_ids)):
         if username in current_ids[x]:
-            row = current_ids[x][0]
-    if data[row][2] == password and data[row][1] == username:
+            row_ = current_ids[x][0]
+    if data[row_][2] == password and data[row_][1] == username:
         return True
     else:
         return False
@@ -131,14 +133,12 @@ def login():
 #new_event("Linear Algebra Cram",1634970424,1634973424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
 #print(current_events[-1])
 
-#edit_user(4426693)
-
-#test login_query
-#print(login_query("jkeller44@gatech.edu", "dumbass45"))
+#test loginquery
+#print(loginQuery("jkeller44@gatech.edu", "dumbass45"))
 
 #new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
 #print(current_ids)
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-#    app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000)
