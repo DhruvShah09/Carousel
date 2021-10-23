@@ -13,6 +13,7 @@
     <title>Sign Up</title>
 
     <!-- Icons font CSS-->
+    <link rel="icon" type="image/png" href="images/icons/carousel-icon.png"/>
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <!-- Font special for pages-->
@@ -37,40 +38,35 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Name</label>
-                                    <input class="input--style-4" type="text" name="name">
+                                    <input class="input--style-4" type="text" name="name", placeholder="George Burdell">
                                 </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">last name</label>
-                                    <input class="input--style-4" type="text" name="last_name">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Birthday</label>
-                                    <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="birthday">
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    <div class="input-group">
+                                        <label class="label">Username</label>
+                                        <input class="input--style-4" type="email" name="username">
+                                    </div>
+
+
+                                    <div class="input-group">
+                                        <label class="label">Password (case sensitive)</label>
+                                        <input class="input--style-4" type="password" name="password">
                                     </div>
                                 </div>
-                            </div>
+                        
+
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Grade</label>
                                     <div class="p-t-10">
                                         <label class="radio-container m-r-45">1st-Year
-                                            <input type="radio" checked="checked" name="gender">
+                                            <input type="radio" name="1st-Year">
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="radio-container">2nd-Year
-                                            <input type="radio" name="gender">
+                                            <input type="radio" name="2nd-Year">
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="radio-container">3rd-Year
-                                            <input type="radio" name="gender">
+                                            <input type="radio" name="3rd-Year">
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="radio-container">4th-Year+
@@ -78,20 +74,6 @@
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Username</label>
-                                    <input class="input--style-4" type="email" name="username">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Password (case sensitive)</label>
-                                    <input class="input--style-4" type="password" name="password">
                                 </div>
                             </div>
                         </div>
