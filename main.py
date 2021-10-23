@@ -15,7 +15,7 @@ df = pd.read_csv(r'user data.csv')
 data_col1 = pd.DataFrame(df, columns = ['ID']).to_numpy()
 data_col2 = pd.DataFrame(df, columns = ['Username']).to_numpy()
 for x in range(data_col1.size):
-    current_ids.append([data_col1[x][0],data_col2[x][0]])
+    current_ids.append([x,data_col1[x][0],data_col2[x][0]])
 #print(current_ids)
 del df
 del data_col1
@@ -28,12 +28,10 @@ temp_index = -1
 
 class User:
     def __init__(self,id):
-        df = pd.read_csv(r'user data.csv')
-        data_col = pd.DataFrame(df, columns = ['ID']).to_numpy()
-        data = df.to_numpy()
-        for x in range(data_col.size):
-            if data_col[x][0] == id:
-                row = x
+        global data
+        for x in range(len(current_ids)):
+            if id in current_ids[x]:
+                row = current_ids[x][0]
         self.id = data[row][0]
         self.username = str(data[row][1])
         self.password = str(data[row][2])
@@ -53,19 +51,25 @@ class Event:
         self.people = [owner.id]
         self.people_names = [owner.name]
         self.location = location
+        for x in range(len(current_ids)):
+            if owner in current_ids[x]:
+                self.people_names = data[current_ids[x][0]][3]
 
     def __str__(self):
         return str(self.name) + ": " + str(datetime.utcfromtimestamp(self.start_time).strftime('%Y-%m-%d %H:%M:%S')) + " to " + str(datetime.utcfromtimestamp(self.end_time).strftime('%Y-%m-%d %H:%M:%S')) + ", Class: " + self.class_ + ", Partipants: " + str(self.people_names) + ", Location: " + self.location
 
 def new_user(username,password,name,year,classes):
     global temp_str
+    global data
     temp_str = ""
     id = rng.randrange(99999999)
     while id in current_ids:
         id = rng.randrange(99999999)
     temp_str = str(id) + "," + username + "," + password + "," + name + "," + str(year) + "," + str(classes)
-    with open('user data.csv','a') as fs:
+    with open(r'user data.csv','a') as fs:
         fs.write(temp_str)
+    data = pd.read_csv(r'user data.csv').to_numpy()
+    current_ids.append([int(data.size/6-1),id,username])
 
 def classes_to_str(classes):
     global temp_str
@@ -80,16 +84,11 @@ def new_event(name,start_time,end_time,class_,owner,location):
 
 def loginQuery(username,password):
     global temp_index
+    global data
     temp_index = -1
     for x in range(len(current_ids)):
         if username in current_ids[x]:
-            temp_index = x
-    df = pd.read_csv('user data.csv')
-    data_col = pd.DataFrame(df, columns = ['ID']).to_numpy()
-    data = df.to_numpy()
-    for x in range(data_col.size):
-        if data_col[x][0] == current_ids[x][0]:
-            row = x
+            row = current_ids[x][0]
     if data[row][2] == password and data[row][1] == username:
         return True
     else:
@@ -114,10 +113,14 @@ def login():
 #jk = User(00000000)
 #print(jk)
 
+#new_event("Linear Algebra Cram",1634970424,1634973424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+#print(current_events[-1])
+
 #test loginquery
 #print(loginQuery("jkeller44@gatech.edu", "dumbass45"))
 
 #new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
+#print(current_ids)
 
 if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
