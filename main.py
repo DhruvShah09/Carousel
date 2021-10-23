@@ -108,7 +108,7 @@ def login():
         else:
             error = 'Invalid Credentials'
             return "Error Logging In"
-    return render_template('templates/login.html')
+    return render_template('login.html')
 
 #Testing code
 #jk = User(00000000)
