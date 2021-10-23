@@ -53,7 +53,7 @@ class User:
         return str(self.id) + ", " + self.username + ", " + self.password + ", " + self.name + ", " + str(self.year) + ", " + str(self.classes)
 
 class Event:
-    def __init__(self,name,start_time,end_time,class_,owner,location):
+    def __init__(self,name,start_time,end_time,owner,location):
         self.id = int(rng.randrange(999999))
         for x in current_events:
             if x.id == id:
@@ -61,7 +61,6 @@ class Event:
         self.name = name
         self.start_time = start_time
         self.end_time = end_time
-        self.class_ = class_
         self.people = [owner.id]
         self.people_names = [owner.name]
         self.location = location
@@ -69,8 +68,21 @@ class Event:
             if owner in current_ids[x]:
                 self.people_names = data[current_ids[x][0]][3]
 
+class Study(Event):
+    def __init__(self,name,start_time,end_time,owner,location,class_):
+        super().__init__(name,start_time,end_time,owner,location)
+        self.class_ = class_
+
     def __str__(self):
         return str(self.name) + ": " + str(datetime.utcfromtimestamp(self.start_time).strftime('%Y-%m-%d %H:%M:%S')) + " to " + str(datetime.utcfromtimestamp(self.end_time).strftime('%Y-%m-%d %H:%M:%S')) + ", Class: " + self.class_ + ", Partipants: " + str(self.people_names) + ", Location: " + self.location
+
+class Sport(Event):
+    def __init__(self,name,start_time,end_time,owner,location,sport):
+        super().__init__(name,start_time,end_time,owner,location)
+        self.sport = sport
+
+    def __str__(self):
+        return str(self.name) + ": " + str(datetime.utcfromtimestamp(self.start_time).strftime('%Y-%m-%d %H:%M:%S')) + " to " + str(datetime.utcfromtimestamp(self.end_time).strftime('%Y-%m-%d %H:%M:%S')) + ", Sport: " + self.sport + ", Partipants: " + str(self.people_names) + ", Location: " + self.location
 
 def new_user(username,password,name,year,classes):
     global temp_str
@@ -90,12 +102,10 @@ def edit_user(id,arr):
     with open(filename, 'r', newline='') as csvFile, tempfile:
         reader = csv.reader(csvFile, delimiter=',', quotechar='"')
         writer = csv.writer(tempfile, delimiter=',', quotechar='"')
-
         for row in reader:
             if row[0] == str(id):
                 row = arr
             writer.writerow(row)
-
     shutil.move(tempfile.name, filename)
 
 def add_event_to_user(id,arr,event):
@@ -122,8 +132,11 @@ def classes_to_str(classes):
         temp_str += ":"
     return temp_str
 
-def new_event(name,start_time,end_time,class_,owner,location):
-    current_events.append(Event(name,start_time,end_time,class_,owner,location))
+def new_study(name,start_time,end_time,owner,location,class_):
+    current_events.append(Study(name,start_time,end_time,owner,location,class_))
+
+def new_sport(name,start_time,end_time,owner,location,sport):
+    current_events.append(Sport(name,start_time,end_time,owner,location,sport))
 
 def search_events(start_time,class_):
     global temp_arr
@@ -205,10 +218,12 @@ def login():
 #jk = User(00000000)
 #print(jk)
 
-#new_event("Linear Algebra Cram 1",1634970424,1634973424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
-#new_event("Linear Algebra Cram 2",1634971424,1634974424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
-#new_event("Linear Algebra Cram 3",1634961424,1634964424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
-#new_event("Linear Algebra Cram 4",1634981424,1634984424,"MATH 1554",find_user("jkeller45@gatech.edu"),"CULC")
+new_study("Linear Algebra Cram 1",1634970424,1634973424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
+print(current_events[-1])
+new_sport("Pickup Football",1634971424,1634974424,find_user("jkeller45@gatech.edu"),"Stamps Field","Football")
+print(current_events[-1])
+#new_study("Linear Algebra Cram 3",1634961424,1634964424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
+#new_sport("Linear Algebra Cram 4",1634981424,1634984424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 
 #print(search_events(1634970424,"MATH 1554"))
 #print(current_events[-1])
@@ -225,6 +240,6 @@ def login():
 
 #print(current_ids)
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+    #app.run(threaded=True, port=5000)
