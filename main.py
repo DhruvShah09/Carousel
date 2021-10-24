@@ -109,6 +109,11 @@ def get_user(name):
         if name in current_ids[x]:
             return User(current_ids[x][0])
 
+def get_event(id):
+    for x in current_events:
+        if x.id == id:
+            return x
+
 def new_user(username,password,name,year,classes):
     global temp_str
     global data
@@ -250,12 +255,7 @@ def usraccount():
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     return render_template('forgot.html')
-<<<<<<< Updated upstream
 #abstractions
-=======
-
-#abstractions 
->>>>>>> Stashed changes
 @app.route('/homepage', methods=['GET', 'POST'])
 def home():
     usr = create_user_object(int(session['user_id']))
@@ -266,7 +266,7 @@ def home():
     return render_template('homepage.html', data=data)
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
-    if method == 'POST': 
+    if method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
     return render_template('carousel.html')
@@ -294,6 +294,9 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 #new_study("Linear Algebra Cram 3",1634961424,1634964424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 #new_sport("Linear Algebra Cram 4",1634981424,1634984424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 
+#print(current_events[0])
+#print(get_event(current_events[0].id))
+
 #print(User(55242536))
 #print(search_events(1634970424,"MATH 1554"))
 #print(current_events[-1])
@@ -311,6 +314,6 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 
 #print(current_ids)
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+    #app.run(threaded=True, port=5000)
