@@ -236,7 +236,12 @@ def login():
             error = 'Invalid Credentials'
             flash(error)
     return render_template('login.html')
-
+@app.route('/usraccount', methods=['GET', 'POST'])
+def usraccount():
+    return render_template('account.html')
+@app.route('/forgot', methods=['GET', 'POST'])
+def forgot():
+    return render_template('forgot.html')
 #abstractions 
 
 def rideCarousel(time, class_):
