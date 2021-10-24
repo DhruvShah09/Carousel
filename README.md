@@ -12,3 +12,6 @@ Carousel handles the matchmaking, and the student reaps the benefits of quality 
 - [Login HTML Template](https://colorlib.com/wp/html5-and-css3-login-forms/)
 - [SignUp HTML Template](https://colorlib.com/wp/free-bootstrap-registration-forms/)
 - [GT Scheduler: Crawler API](https://github.com/gt-scheduler/crawler.git)
+- [Carousel Icon](https://www.flaticon.com/free-icon/carousel_86632)
+- [Carousel Gif](https://www.pinterest.es/pin/425308758559200848/)
+- [Bobby Dodd Stadium Background Image](https://www.11alive.com/article/sports/georgia-tech-football-friday-night-game/85-03013611-856c-4459-b20e-ccc07a044aff)
