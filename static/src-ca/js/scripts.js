@@ -317,28 +317,24 @@ function sendPostRequest() {
             console.log("post request activated");
             convertToUnix();
             if (isNaN(unixStart) || isNaN(unixEnd)) {
-                throw "Unix Value for Start/End Time is Not a Number."
+                 throw "Unix Value for Start/End Time is Not a Number."
+            }
+            console.log("1")
+            //add post request here (dhruv)pt
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://127.0.0.1:5000/carousel', true);
+            // we defined the xhr
+            console.log("2");
+            xhr.onreadystatechange = function () {
+                if (this.readyState === 4) return;
+                var formData = "";
+                formData = unixStart + "," + unixEnd;
+                // we get the returned data
+                // end of state change: it can be after some time (async)
             }
 
-            //add post request here (dhruv)
-            var xhr = new XMLHttpRequest();
-            // we defined the xhr
-
-            xhr.onreadystatechange = function () {
-                if (this.readyState != 4) return;
-
-                if (this.status == 200) {
-                    var formData = new FormData();
-                    formData.append('start',unixStart);
-                    formData.append('finish',unixEnd);
-                    // we get the returned data
-                }
-
-                // end of state change: it can be after some time (async)
-            };
-
-            xhr.open('POST', 'http://127.0.0.1:5000/carousel', true);
-            xhr.send(formData);
+            console.log("7");
+            xhr.send();
             //send unixStart & unixEnd
 
             console.log("post request successful");
