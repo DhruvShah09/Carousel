@@ -321,6 +321,24 @@ function sendPostRequest() {
             }
 
             //add post request here (dhruv)
+            var xhr = new XMLHttpRequest();
+            // we defined the xhr
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState != 4) return;
+
+                if (this.status == 200) {
+                    var formData = new FormData();
+                    formData.append('start',unixStart);
+                    formData.append('finish',unixEnd);
+                    // we get the returned data
+                }
+
+                // end of state change: it can be after some time (async)
+            };
+
+            xhr.open('POST', 'http://127.0.0.1:5000/carousel', true);
+            xhr.send();
             //send unixStart & unixEnd
 
             console.log("post request successful");
