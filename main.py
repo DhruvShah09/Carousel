@@ -101,7 +101,7 @@ def get_id(username):
 
 def get_username(id):
     for x in range(len(current_ids)):
-        if username in current_ids[x]:
+        if id in current_ids[x]:
             return current_ids[x][2]
 
 def get_user(name):
@@ -266,14 +266,14 @@ def home():
     return render_template('homepage.html', data=data)
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
-    if method == 'POST':
+    if request.method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
     return render_template('carousel.html')
 
 def rideCarouselEventDisplay(time, class_, time_two, location):
     arr_to_display = search_events(time, class_)
-    if arr_to_display is empty:
+    if arr_to_display == []:
         usr = create_user_object(int(session['user_id']))
         name = usr.name
         start_time = time
@@ -314,6 +314,6 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 
 #print(current_ids)
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    #app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000)

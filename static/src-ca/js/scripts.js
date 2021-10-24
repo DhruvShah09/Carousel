@@ -73,11 +73,43 @@ function addDateItem() {
 // //start and end times:
 // // for (var i = 1; i <= 2; i++) {
 // //     var time = document.getElementById(i == 1 ? "start" : "end" + "-selection");
-    var time = document.getElementById("start-selection");
+    var time1 = document.getElementById("start-selection");
+    var timeadd;
+    var timeadd1;
+    var frontend = "";
 
-    if (time != null) {
-        time.addEventListener("click", function() {
-            var options = time.querySelectorAll("option");
+    var startTime = time1.value.substring(0, 2);
+    var backend = time1.value.substring(2);
+    if (startTime.charAt(2) == ':') {
+        startTime = startTime.substring(0, 1);
+        backend = time1.value.substring(1);
+    }
+
+
+    var useStartTime = parseInt(startTime);
+    
+    var ap1 = document.getElementById("am/pm1");
+    if(ap1.value == "p.m.") {
+        timeadd = " p.m.";
+        timeadd1 = 12;
+    }
+    else {
+        timeadd = " a.m."
+        timeadd1 = 0;
+    }
+ var timeComp = useStartTime + timeadd1;
+    if (time1.value == 12) {
+        useStartTime = 0;
+    }
+    if(timeComp < 10 && timeadd == " a.m.") {
+        frontend = "0"
+    }
+    console.log(frontend + (useStartTime + timeadd1) + backend);
+
+
+    if (time1 != null) {
+        time1.addEventListener("click", function() {
+            var options = time1.querySelectorAll("option");
             var count = options.length;
             if(typeof(count) === "undefined" || count < 2)
             {
@@ -86,21 +118,178 @@ function addDateItem() {
         });
     }
 
-    if (time != null) {
-        time.addEventListener("change", addTimeItem, false);
-    }
+    if (time1 != null) {
+        time1.addEventListener("change", addTimeItem, false);
+     }
+
+     if(ap1 != null) {
+         ap1.addEventListener("change", addTimeItem, false);
+     }
     
     function addTimeItem() {
-        // if (i == 1) {
-            console.log(time.value);
-        // } else {
-        //     var finalEndTime = time.value;
-        //     console.log(finalEndTime);
-        // }
+    //     if (i == 1) {
+    //         console.log(time1.value);
+    //     } else {
+    //         var finalEndTime = time1.value;
+    //         console.log(finalEndTime);
+    //     }
 
-        convertToUnix();
+//convertToUnix();}
+    startTime = time1.value.substring(0, 2);
+    backend = time1.value.substring(1);
+    if (startTime.charAt(2) == ':') {
+        startTime = startTime.substring(0, 1);
+        backend = time1.value.substring(0);
     }
-// }
+
+
+    useStartTime = parseInt(startTime);
+
+    
+    ap1 = document.getElementById("am/pm1");
+    if(ap1.value == "p.m.") {
+        timeadd = " p.m.";
+        timeadd1 = 12;
+    }
+    else {
+        timeadd = " a.m."
+        timeadd1 = 0;
+    }
+
+    timeComp = useStartTime + timeadd1;
+    console.log(timeComp);
+
+    if (time1.value + timeadd == "12 a.m.") {
+        useStartTime = 0;
+    }
+    console.log(useStartTime + timeadd1 + backend);
+
+if(ap1.value == "p.m.") {
+    timeadd = " p.m.";
+}
+else {
+    timeadd = " a.m."
+}
+
+
+    if(timeComp < 10 && timeadd == " a.m.") {
+        frontend = "0"
+    }
+    else {
+        frontend = "";
+    }
+    var startTimeFinal = (frontend + (useStartTime + timeadd1) + backend);
+}
+    // }
+
+    var time2 = document.getElementById("end-selection");
+    var timeadd2;
+    var timeadd3;
+    var frontend2 = "";
+
+    var endTime = time2.value.substring(0, 2);
+    var backend2 = time2.value.substring(2);
+    if (endTime.charAt(2) == ':') {
+        endTime = endTime.substring(0, 1);
+        backend2 = time2.value.substring(1);
+    }
+
+
+    var useEndTime = parseInt(endTime);
+    
+    var ap2 = document.getElementById("am/pm2");
+    if(ap2.value == "p.m.") {
+        timeadd2 = " p.m.";
+        timeadd3 = 12;
+    }
+    else {
+        timeadd2 = " a.m."
+        timeadd3 = 0;
+    }
+ var timeComp2 = useEndTime + timeadd3;
+    if (time2.value == 12) {
+        useEndTime = 0;
+    }
+    if(timeComp2 < 10 && timeadd2 == " a.m.") {
+        frontend2 = "0"
+    }
+    console.log(frontend2 + (useEndTime + timeadd3) + backend2);
+
+
+    if (time2 != null) {
+        time2.addEventListener("click", function() {
+            var options = time2.querySelectorAll("option");
+            var count = options.length;
+            if(typeof(count) === "undefined" || count < 2)
+            {
+                addTimeItem();
+            }
+        });
+    }
+
+    if (time2 != null) {
+        time2.addEventListener("change", addTimeItem, false);
+     }
+
+     if(ap2 != null) {
+         ap2.addEventListener("change", addTimeItem, false);
+     }
+    
+    function addTimeItem() {
+    //     if (i == 1) {
+    //         console.log(time1.value);
+    //     } else {
+    //         var finalEndTime = time1.value;
+    //         console.log(finalEndTime);
+    //     }
+
+//convertToUnix();}
+    endTime = time2.value.substring(0, 2);
+    backend2 = time2.value.substring(1);
+    if (endTime.charAt(2) == ':') {
+        endTime = endTime.substring(0, 1);
+        backend2 = time2.value.substring(0);
+    }
+
+
+    useEndTime = parseInt(endTime);
+
+    
+    ap2 = document.getElementById("am/pm2");
+    if(ap2.value == "p.m.") {
+        timeadd2 = " p.m.";
+        timeadd3 = 12;
+    }
+    else {
+        timeadd2 = " a.m."
+        timeadd3 = 0;
+    }
+
+    timeComp2 = useEndTime + timeadd3;
+
+
+    if (time2.value + timeadd2 == "12 a.m.") {
+        useEndTime = 0;
+    }
+
+
+if(ap2.value == "p.m.") {
+    timeadd2 = " p.m.";
+}
+else {
+    timeadd2 = " a.m."
+}
+
+
+    if(timeComp2 < 10 && timeadd2 == " a.m.") {
+        frontend2 = "0"
+    }
+    else {
+        frontend2 = "";
+    }
+    var endTimeFinal = (frontend2 + (useEndTime + timeadd3) + backend2);
+    console.log(endTimeFinal);
+}
 
 // //am/pm:
 // for (var i = 1; i <= 2; i++) {
@@ -139,9 +328,20 @@ function addDateItem() {
 //     }
 // }
 
-//convert to Unix time, then send to backend
+//convert to Unix time
 function convertToUnix() {
     console.log(Math.round(new Date(date.value).getTime()/1000));
 
-    //add post request here (dhruv)
+    //if ()
+
+}
+
+//called when button "Find a Group" is pressed
+function sendPostRequest() {
+    if (date != null && date.value != "mm/dd/yyyy" && time1 != null) { //check that all fields aren't null
+        //add post request here (dhruv)
+        //send unix value 
+    } else {
+        alert("Please fill out all required fields (Date, Start Time, End Time, a.m./p.m.) and try again.");
+    }
 }
