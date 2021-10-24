@@ -358,7 +358,7 @@ def remove_event(compare, remove):
                     row[6] = event_str
                 axis.append(row)
             print(axis)
-            with open('user_data.csv', 'w', newline='') as g: 
+            with open('user_data.csv', 'w', newline='') as g:
                 b = csv.writer(g, delimiter=',')
                 for row in axis:
                     b.writerow(row)
@@ -376,15 +376,15 @@ def flush_events():
                 row[6] = event_str
                 axis.append(row)
             print(axis)
-            with open('user_data.csv', 'w', newline='') as g: 
+            with open('user_data.csv', 'w', newline='') as g:
                 b = csv.writer(g, delimiter=',')
                 for row in axis:
                     b.writerow(row)
         except:
             pass
 
-           
-        
+
+
 #edit_user(55242536,[55242536,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101",get_event_ids(get_row("jkeller44@gatech.edu"))])
 #change_classes(55242536,"MATH 1554:ENGL 1101")
 flush_events()
