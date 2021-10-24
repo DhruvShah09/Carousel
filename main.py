@@ -101,7 +101,7 @@ def get_id(username):
 
 def get_username(id):
     for x in range(len(current_ids)):
-        if username in current_ids[x]:
+        if id in current_ids[x]:
             return current_ids[x][2]
 
 def get_user(name):
@@ -112,6 +112,11 @@ def get_user(name):
 def get_event(id):
     for x in current_events:
         if x.id == id:
+            return x
+
+def get_event_index(id):
+    for x in range(len(current_events)):
+        if current_events[x].id == id:
             return x
 
 def new_user(username,password,name,year,classes):
@@ -137,6 +142,7 @@ def edit_user(id,arr):
                 row = arr
             writer.writerow(row)
     shutil.move(tempfile.name, filename)
+    data = pd.read_csv(filename).to_numpy()
 
 def add_event_to_user(id,arr,event):
     global temp_arr
@@ -155,14 +161,6 @@ def change_classes(id,new_classes):
     temp_arr = data[r]
     temp_arr[5] = new_classes
     edit_user(id,temp_arr)
-
-def classes_to_str(classes):
-    global temp_str
-    temp_str = ""
-    for x in range(len(classes)):
-        temp_str += classes[x]
-        temp_str += ":"
-    return temp_str
 
 def new_study(name,start_time,end_time,owner,location,class_):
     current_events.append(Study(name,start_time,end_time,owner,location,class_))
@@ -305,13 +303,17 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 #jk = User(00000000)
 #print(jk)
 
-new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
+#new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
 #print(current_events[-1])
 #new_sport("Pickup Football",1634971424,1634974424,get_user("jkeller45@gatech.edu"),"Stamps Field","Football")
 #print(current_events[-1])
 #new_study("Linear Algebra Cram 3",1634961424,1634964424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 #new_sport("Linear Algebra Cram 4",1634981424,1634984424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
-
+#print(get_user("jkeller44@gatech.edu"))
+#print(current_events[0])
+#print(current_events)
+#print(current_events)
+#print(get_user("jkeller44@gatech.edu"))
 #print(current_events[0])
 #print(get_event(current_events[0].id))
 
@@ -332,6 +334,6 @@ new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gate
 
 #print(current_ids)
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+    #app.run(threaded=True, port=5000)
