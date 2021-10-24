@@ -197,6 +197,7 @@ def signup():
             else:
                 inp_class_string = inp_class_string + str(inp_class[i])
         new_user(inp_username,inp_password,inp_name,inp_year,inp_class_string)
+        flash("")
     return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
