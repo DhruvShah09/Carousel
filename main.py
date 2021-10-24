@@ -166,7 +166,7 @@ def classes_to_str(classes):
 
 def new_study(name,start_time,end_time,owner,location,class_):
     current_events.append(Study(name,start_time,end_time,owner,location,class_))
-    add_event_to_user(owner.id,data[get_row(owner.id)],current_events[-1].id)
+    add_event_to_user(owner.id,data[get_row(owner.id)],int(current_events[-1].id))
 
 def new_sport(name,start_time,end_time,owner,location,sport):
     current_events.append(Sport(name,start_time,end_time,owner,location,sport))
@@ -234,7 +234,6 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
     error = None
     if request.method == 'POST':
         userName = request.form['username']
@@ -259,11 +258,10 @@ def forgot():
 @app.route('/homepage', methods=['GET', 'POST'])
 def home():
     usr = create_user_object(int(session['user_id']))
-    data = []
-    for a in usr.events:
-        data.append(a)
-    print(data)
-    return render_template('homepage.html', data=data)
+    tableval = []
+    print(usr.events[0])
+    print(get_event(int(usr.events[0])))
+    return render_template('homepage.html', tableval=tableval)
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
     if method == 'POST':
@@ -287,7 +285,7 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 #jk = User(00000000)
 #print(jk)
 
-#new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
+new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
 #print(current_events[-1])
 #new_sport("Pickup Football",1634971424,1634974424,get_user("jkeller45@gatech.edu"),"Stamps Field","Football")
 #print(current_events[-1])
@@ -314,6 +312,6 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 
 #print(current_ids)
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    #app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000)
