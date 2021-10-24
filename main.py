@@ -215,6 +215,8 @@ def clear_expired_events():
     for x in current_events:
         if x.end_time >= time.time():
             current_events.remove(x)
+            for s in current_ids:
+                remove_event(s[1],x)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
