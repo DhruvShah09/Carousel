@@ -66,13 +66,9 @@ date.addEventListener("change", addDateItem, false);
 
 function addDateItem() {
     console.log(date.value);
-
-    convertToUnix();
 }
 
-// //start and end times:
-// // for (var i = 1; i <= 2; i++) {
-// //     var time = document.getElementById(i == 1 ? "start" : "end" + "-selection");
+//start and end times:
 var time1 = document.getElementById("start-selection");
 var timeadd;
 var timeadd1;
@@ -129,15 +125,11 @@ if (time1 != null) {
      ap1.addEventListener("change", addTimeItem2, false);
  }
 
-function addTimeItem2() {
-//     if (i == 1) {
-//         console.log(time1.value);
-//     } else {
-//         var finalEndTime = time1.value;
-//         console.log(finalEndTime);
-//     }
+var startTimeFinal;
+var endTimeFinal;
 
-//convertToUnix();}
+function addTimeItem2() {
+
 startTime = time1.value.substring(0, 2);
 
 backend = time1.value.substring(2);
@@ -189,7 +181,7 @@ else {
 }
 
 
-var startTimeFinal = (frontend + (useStartTime + timeadd1) + backend);
+startTimeFinal = (frontend + (useStartTime + timeadd1) + backend);
 if (useStartTime == 0 && timeadd == " a.m.") {
     startTimeFinal = "00" + backend;
 }
@@ -198,7 +190,6 @@ else if (useStartTime == 0 && timeadd == " p.m.") {
 }
 console.log(startTimeFinal);
 }
-    // }
 
     var time2 = document.getElementById("end-selection");
     var timeadd2;
@@ -257,14 +248,7 @@ console.log(startTimeFinal);
      }
     
     function addTimeItem() {
-    //     if (i == 1) {
-    //         console.log(time1.value);
-    //     } else {
-    //         var finalEndTime = time1.value;
-    //         console.log(finalEndTime);
-    //     }
 
-//convertToUnix();}
     endTime = time2.value.substring(0, 2);
 
     backend2 = time2.value.substring(2);
@@ -316,7 +300,7 @@ else {
     }
 
 
-    var endTimeFinal = (frontend2 + (useEndTime + timeadd3) + backend2);
+    endTimeFinal = (frontend2 + (useEndTime + timeadd3) + backend2);
     if (useEndTime == 0 && timeadd2 == " a.m.") {
         endTimeFinal = "00" + backend2;
     }
@@ -326,57 +310,37 @@ else {
     console.log(endTimeFinal);
 }
 
-// //am/pm:
-// for (var i = 1; i <= 2; i++) {
-//     var select = document.getElementById("am/pm" + i);
-
-//     if (select != null) {
-//         select.addEventListener("click", function() {
-//             var options = select.querySelectorAll("option");
-//             var count = options.length;
-//             if(typeof(count) === "undefined" || count < 2)
-//             {
-//                 addSelectItem();
-//             }
-//         });
-//     }
-
-//     if (select != null) {
-//         select.addEventListener("change", function() {
-//             if(select.value == "addNew")
-//             {
-//                 addSelectItem();
-//             }
-//         });
-//     }
-    
-//     function addSelectItem() {
-//         if (i == 1) {
-//             var finalSelection1 = select.value;
-//             console.log(finalSelection1);
-//         } else {
-//             var finalSelection2 = select.value;
-//             console.log(finalSelection2);
-//         }
-
-//         convertToUnix();
-//     }
-// }
-
-//convert to Unix time
-function convertToUnix() {
-    console.log(Math.round(new Date(date.value).getTime()/1000));
-
-    //if ()
-
-}
-
 //called when button "Find a Group" is pressed
 function sendPostRequest() {
-    if (date != null && date.value != "mm/dd/yyyy" && time1 != null) { //check that all fields aren't null
-        //add post request here (dhruv)
-        //send unix value 
-    } else {
-        alert("Please fill out all required fields (Date, Start Time, End Time, a.m./p.m.) and try again.");
+    try {
+        if (date.value != "") {
+            console.log("post request activated");
+            convertToUnix();
+            if (unixStart == NaN || unixEnd == NaN) {
+                throw "Unix Value for Start/End Time is Not a Number."
+            }
+
+            //add post request here (dhruv)
+            //send unixStart & unixEnd
+
+            console.log("post request successful");
+        } else {
+            throw "Date is not selected.";
+        }
     }
+    catch (error) {
+        alert("Please fill out all required fields (Date, Start Time, End Time, a.m./p.m.), ensure there are no duplicate times, and try again."); 
+    }
+}
+
+var unixStart;
+var unixEnd;
+
+//convert fields to Unix time
+function convertToUnix() {
+    unixStart = Math.round(new Date(date.value + "T" + startTimeFinal).getTime()/1000);
+    unixEnd = Math.round(new Date(date.value + "T" + endTimeFinal).getTime()/1000);
+
+    console.log(unixStart);
+    console.log(unixEnd);
 }
