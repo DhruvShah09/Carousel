@@ -281,7 +281,7 @@ def home():
     return render_template('homepage.html', tableval=tableval)
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
-    if method == 'POST':
+    if request.method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
 
@@ -289,7 +289,7 @@ def carousel():
 
 def rideCarouselEventDisplay(time, class_, time_two, location):
     arr_to_display = search_events(time, class_)
-    if arr_to_display is empty:
+    if arr_to_display == []:
         usr = create_user_object(int(session['user_id']))
         name = usr.name
         start_time = time
