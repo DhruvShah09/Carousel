@@ -12,7 +12,6 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for, s
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 app.secret_key = "bcasbhd31231923unazcnqbndubqsiubf"
-
 #database stuff
 current_ids = []
 filename = r'user_data.csv'
@@ -233,9 +232,10 @@ def signup():
             else:
                 inp_class_string = inp_class_string + str(inp_class[i])
         new_user(inp_username,inp_password,inp_name,inp_year,inp_class_string)
+        return redirect(url_for('login'))
     return render_template('signup.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -246,7 +246,7 @@ def login():
             id_str = str(get_id(userName))
             print(id_str)
             session['user_id'] = id_str
-            return "Succesfully Logged In"
+            return redirect(url_for('home'))
         else:
             error = 'Invalid Credentials'
             flash(error)
@@ -260,25 +260,30 @@ def forgot():
 #abstractions
 @app.route('/homepage', methods=['GET', 'POST'])
 def home():
-    usr = create_user_object(int(session['user_id']))
-    tableval = []
-    eventnames = []
-    eventstarts = []
-    eventends = []
-    eventparticipants = []
-    eventlocation = []
-    eventclass = []
-    for a in usr.events:
-        temp_event = get_event(int(a))
-        eventnames.append(temp_event.name)
-        eventstarts.append(temp_event.start_time)
-        eventends.append(temp_event.end_time)
-        eventparticipants.append(temp_event.people_names)
-        eventlocation.append(temp_event.location)
-        eventclass.append(temp_event.class_)
-        tableval.append(str(get_event(int(a))))
-    print(tableval)
-    return render_template('homepage.html', tableval=tableval)
+    try:
+        if session['login_state'] == True:
+            usr = create_user_object(int(session['user_id']))
+            tableval = []
+            eventnames = []
+            eventstarts = []
+            eventends = []
+            eventparticipants = []
+            eventlocation = []
+            eventclass = []
+            for a in usr.events:
+                temp_event = get_event(int(a))
+                eventnames.append(temp_event.name)
+                eventstarts.append(str(datetime.utcfromtimestamp(temp_event.start_time).strftime('%Y-%m-%d %H:%M:%S')))
+                eventends.append(str(datetime.utcfromtimestamp(temp_event.start_time).strftime('%Y-%m-%d %H:%M:%S')))
+                eventparticipants.append(temp_event.people_names)
+                eventlocation.append(temp_event.location)
+                eventclass.append(temp_event.class_)
+                tableval.append(str(get_event(int(a))))
+            iternum = len(eventnames)
+            print(tableval)
+            return render_template('homepage.html', eventnames=eventnames, eventstarts=eventstarts, eventends=eventends, eventparticipants=eventparticipants, eventlocation=eventlocation, eventclass=eventclass, iternum=iternum)
+    except:
+        return redirect(url_for('login'))
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
     if request.method == 'POST':
@@ -303,7 +308,12 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 #jk = User(00000000)
 #print(jk)
 
+<<<<<<< Updated upstream
 #new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
+=======
+new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("dshah374@gatech.edu"),"CULC","MATH 1554")
+new_study("English Research Symposium",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"Crosland Tower","ENGL 1102")
+>>>>>>> Stashed changes
 #print(current_events[-1])
 #new_sport("Pickup Football",1634971424,1634974424,get_user("jkeller45@gatech.edu"),"Stamps Field","Football")
 #print(current_events[-1])
@@ -328,10 +338,56 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 
 #join_event(57579823,current_events[0])
 #print(current_events[0])
+def remove_event(compare, remove):
+    with(open('user_data.csv', 'r', newline='')) as f:
+        try:
+            a = csv.reader(f, delimiter=',')
+            axis = []
+            for row in a:
+                events = row[6].split(':')
+                if str(compare) == row[0]:
+                    events.remove(str(remove))
+                    print(events)
+                    event_str = ""
+                    z = len(events)
+                    for x in range(len(events)):
+                        if x != z-1:
+                            event_str = event_str + events[x] + ":"
+                        else:
+                            event_str = event_str + events[x]
+                    row[6] = event_str
+                axis.append(row)
+            print(axis)
+            with open('user_data.csv', 'w', newline='') as g: 
+                b = csv.writer(g, delimiter=',')
+                for row in axis:
+                    b.writerow(row)
+        except:
+            pass
+def flush_events():
+    with(open('user_data.csv', 'r', newline='')) as f:
+        try:
+            a = csv.reader(f, delimiter=',')
+            axis = []
+            for row in a:
+                events = row[6].split(':')
+                print(events)
+                event_str = ""
+                row[6] = event_str
+                axis.append(row)
+            print(axis)
+            with open('user_data.csv', 'w', newline='') as g: 
+                b = csv.writer(g, delimiter=',')
+                for row in axis:
+                    b.writerow(row)
+        except:
+            pass
 
+           
+        
 #edit_user(55242536,[55242536,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101",get_event_ids(get_row("jkeller44@gatech.edu"))])
 #change_classes(55242536,"MATH 1554:ENGL 1101")
-
+flush_events()
 #print(current_ids)
 
 #if __name__ == '__main__':
