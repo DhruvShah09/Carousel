@@ -259,14 +259,29 @@ def forgot():
 def home():
     usr = create_user_object(int(session['user_id']))
     tableval = []
-    print(usr.events[0])
-    print(get_event(int(usr.events[0])))
+    eventnames = []
+    eventstarts = []
+    eventends = []
+    eventparticipants = []
+    eventlocation = []
+    eventclass = []
+    for a in usr.events:
+        temp_event = get_event(int(a))
+        eventnames.append(temp_event.name)
+        eventstarts.append(temp_event.start_time)
+        eventends.append(temp_event.end_time)
+        eventparticipants.append(temp_event.people_names)
+        eventlocation.append(temp_event.location)
+        eventclass.append(temp_event.class_)
+        tableval.append(str(get_event(int(a))))
+    print(tableval)
     return render_template('homepage.html', tableval=tableval)
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
     if method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
+
     return render_template('carousel.html')
 
 def rideCarouselEventDisplay(time, class_, time_two, location):
