@@ -117,8 +117,21 @@
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
                         <h2>Study Match</h2>
-                        <p>insert search results here (study group w info)</p>
-                        <p>if no available groups, then have create button become visible</p>
+                        {% for i in range(iternum) %}
+                        <div class="card text-center" style="margin: 5%;">
+                            <div class="card-header">
+                              {{eventnames[i]}}
+                            </div>
+                            <div class="card-body">
+                              <h5 class="card-title">{{eventclass[i]}}</h5>
+                              <p class="card-text">{{eventstarts[i]}}   to   {{eventends[i]}}</p>
+                              <form action="" method="post"><button name="leaves" class="btn btn-primary" value="{{eventids[i]}}">Join Event</button></form>
+                            </div>
+                            <div class="card-footer text-muted">
+                              Location: {{eventlocation[i]}}
+                            </div>
+                          </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

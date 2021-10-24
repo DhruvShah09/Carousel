@@ -283,7 +283,7 @@ def home():
                 eventids.append(temp_event.id)
                 eventnames.append(temp_event.name)
                 eventstarts.append(str(datetime.utcfromtimestamp(temp_event.start_time).strftime('%Y-%m-%d %H:%M:%S')))
-                eventends.append(str(datetime.utcfromtimestamp(temp_event.start_time).strftime('%Y-%m-%d %H:%M:%S')))
+                eventends.append(str(datetime.utcfromtimestamp(temp_event.end_time).strftime('%Y-%m-%d %H:%M:%S')))
                 eventparticipants.append(temp_event.people_names)
                 eventlocation.append(temp_event.location)
                 eventclass.append(temp_event.class_)
@@ -300,19 +300,36 @@ def carousel():
     usr = create_user_object(int(session['user_id']))
     for class_ in usr.classes:
         available = rideCarouselEventDisplay(1634970424, class_, 1634973424, 'CULC')
-        print(available)
-    return render_template('carousel.html')
+        eventnames = []
+        eventstarts = []
+        eventends = []
+        eventparticipants = []
+        eventlocation = []
+        eventclass = []
+        eventids = []
+        iternum = 0
+        for a in available:
+            if a != None:
+                eventids.append(a.id)
+                eventnames.append(a.name)
+                eventstarts.append(str(datetime.utcfromtimestamp(a.start_time).strftime('%Y-%m-%d %H:%M:%S')))
+                eventends.append(str(datetime.utcfromtimestamp(a.end_time).strftime('%Y-%m-%d %H:%M:%S')))
+                eventlocation.append(a.location)
+                eventclass.append(a.class_)
+                iternum = iternum + 1
+    return render_template('carousel.html', eventnames=eventnames, eventstarts=eventstarts, eventends=eventends, eventlocation=eventlocation, eventclass=eventclass, iternum=iternum, eventids=eventids)
 
 def rideCarouselEventDisplay(time, class_, time_two, location):
     arr_to_display = search_events(time, class_)
     if arr_to_display == []:
         usr = create_user_object(int(session['user_id']))
-        name = usr.name
+        name = class_
         start_time = time
         end_time = time_two
         owner = usr
         loc = location
         arr_to_display.append(new_study(name, start_time, end_time, owner, loc, class_))
+    print(arr_to_display)
     return arr_to_display
 
 def remove_event(compare, remove):
