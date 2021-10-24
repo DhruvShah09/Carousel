@@ -237,6 +237,15 @@ def login():
             flash(error)
     return render_template('login.html')
 
+#abstractions 
+
+def rideCarousel(time, class_):
+    arr_to_display = search_events(time, class_)
+    if arr_to_display is empty:
+        name 
+        new_study(name, start_time, end_time, owner, location, class_)
+    pass
+
 #Testing code
 #jk = User(00000000)
 #print(jk)
@@ -264,6 +273,6 @@ def login():
 
 #print(current_ids)
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    #app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000)
