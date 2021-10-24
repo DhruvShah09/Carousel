@@ -311,34 +311,6 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
         arr_to_display.append(new_study(name, start_time, end_time, owner, loc, class_))
     return arr_to_display
 
-#Testing code
-#jk = User(00000000)
-#print(jk)
-
-new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
-#print(current_events[-1])
-#new_sport("Pickup Football",1634971424,1634974424,get_user("jkeller45@gatech.edu"),"Stamps Field","Football")
-#print(current_events[-1])
-new_study("Linear Algebra Cram 3",1634961424,1634964424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
-#print(get_user("jkeller44@gatech.edu"))
-#print(current_events[0])
-#print(current_events)
-#print(current_events)
-#print(get_user("jkeller44@gatech.edu"))
-#print(current_events[0])
-#print(get_event(current_events[0].id))
-
-#print(User(55242536))
-#print(search_events(1634970424,"MATH 1554"))
-#print(current_events[-1])
-
-#test loginquery
-#print(loginQuery("jkeller44@gatech.edu", "dumbass45"))
-
-#new_user("jkeller44@gatech.edu","dumbass45","Jack Keller",1,classes_to_str(["MATH 1554","ENGL 1101","CS 1100","CS 1331","POL 1101"])[:-1]+"\n")
-
-#join_event(57579823,current_events[0])
-#print(current_events[0])
 def remove_event(compare, remove):
     with(open('user_data.csv', 'r', newline='')) as f:
         try:
@@ -394,7 +366,12 @@ def flush_events():
         except:
             pass
 
-
+#testing code
+new_study("Linear Algebra Cram Session",1635373800,1635381000,get_user("jkeller44@gatech.edu"),"CULC 4th Floor","MATH 1554")
+new_study("Linear Algebra Exam Review",1635373800,1635379200,get_user("dshah374@gatech.edu"),"GT Connector","MATH 1554")
+new_study("Linear Algebra Leontif Model Practice",1635374700,1635378300,get_user("aristabasal@gmail.com"),"Crossland 2","MATH 1554")
+new_study("Linear Algebra Last Minute Study Session",1635373800,1635379200,get_user("bourkos@gmail.com"),"Crossland 5","MATH 1554")
+new_study("Microeconomics Unit Review",1635372000,1635377400,get_user("jkeller45@gatech.edu"),"CULC 3rd Floor","ECON 2106")
 
 #edit_user(55242536,[55242536,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101",get_event_ids(get_row("jkeller44@gatech.edu"))])
 #change_classes(55242536,"MATH 1554:ENGL 1101")
