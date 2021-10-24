@@ -6,7 +6,7 @@ from tempfile import NamedTemporaryFile
 import shutil
 from datetime import datetime
 import random as rng
-from flask import Flask, request, jsonify, render_template, redirect, url_for,session,flash
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session, flash
 
 #flask app
 app = Flask(__name__)
@@ -83,6 +83,11 @@ class Sport(Event):
 
     def __str__(self):
         return str(self.name) + ": " + str(datetime.utcfromtimestamp(self.start_time).strftime('%Y-%m-%d %H:%M:%S')) + " to " + str(datetime.utcfromtimestamp(self.end_time).strftime('%Y-%m-%d %H:%M:%S')) + ", Sport: " + self.sport + ", Partipants: " + str(self.people_names) + ", Location: " + self.location
+
+def create_user_object(id):
+    for x in range(len(current_ids)):
+        if id in current_ids[x]:
+            return User(id)
 
 def new_user(username,password,name,year,classes):
     global temp_str
@@ -168,6 +173,9 @@ def join_event(user_id,event):
             event.people.append(user_id)
             event.people_names.append(data[current_ids[x][0]][3])
 
+def get_user_classes(id):
+    return create_user_object(id).classes
+
 def login_query(username,password):
     global temp_index
     global data
@@ -197,7 +205,6 @@ def signup():
             else:
                 inp_class_string = inp_class_string + str(inp_class[i])
         new_user(inp_username,inp_password,inp_name,inp_year,inp_class_string)
-        flash("")
     return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -219,10 +226,10 @@ def login():
 #jk = User(00000000)
 #print(jk)
 
-new_study("Linear Algebra Cram 1",1634970424,1634973424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
-print(current_events[-1])
-new_sport("Pickup Football",1634971424,1634974424,find_user("jkeller45@gatech.edu"),"Stamps Field","Football")
-print(current_events[-1])
+#new_study("Linear Algebra Cram 1",1634970424,1634973424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
+#print(current_events[-1])
+#new_sport("Pickup Football",1634971424,1634974424,find_user("jkeller45@gatech.edu"),"Stamps Field","Football")
+#print(current_events[-1])
 #new_study("Linear Algebra Cram 3",1634961424,1634964424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 #new_sport("Linear Algebra Cram 4",1634981424,1634984424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 
