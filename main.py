@@ -239,6 +239,7 @@ def signup():
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
+    new_study("Linear Algebra Cram Session",1635373800,1635381000,get_user("jkeller44@gatech.edu"),"CULC 4th Floor","MATH 1554")
     error = None
     if request.method == 'POST':
         userName = request.form['username']
@@ -296,7 +297,10 @@ def carousel():
     if request.method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
-
+    usr = create_user_object(int(session['user_id']))
+    for class_ in usr.classes:
+        available = rideCarouselEventDisplay(1634970424, class_, 1634973424, 'CULC')
+        print(available)
     return render_template('carousel.html')
 
 def rideCarouselEventDisplay(time, class_, time_two, location):
@@ -306,7 +310,7 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
         name = usr.name
         start_time = time
         end_time = time_two
-        owner = usr.username
+        owner = usr
         loc = location
         arr_to_display.append(new_study(name, start_time, end_time, owner, loc, class_))
     return arr_to_display
