@@ -42,28 +42,10 @@
             <div class="container px-4 text-center">
                 <label class="label">Date: </label>
                 <input type="date" id="date-input" name="date"
-                value="" min="">
-
-                <script>var today = new Date();
-                    var dd = today.getDate();
-                    var mm = today.getMonth() + 1; //January is 0!
-                    var yyyy = today.getFullYear();
-                    
-                    if (dd < 10) {
-                       dd = '0' + dd;
-                    }
-                    
-                    if (mm < 10) {
-                       mm = '0' + mm;
-                    } 
-                        
-                    today = yyyy + '-' + mm + '-' + dd;
-
-                    document.getElementById("date-input").setAttribute("min", today);
-                    document.getElementById("date-input").setAttribute("value", today);</script>
+                value="" min="" onclick="getTodaysDate()">
 
                 <label class="label" id="start-time">Start Time: </label>
-                <select name="Time" id="time">
+                <select name="Time" id="start-selection">
                     <option>12:00</option>
                     <option>12:30</option>
                     <option>1:00</option>
@@ -90,13 +72,13 @@
                     <option>11:30</option>
                 </select>
 
-                <select name="AM/PM" id="am/pm">
+                <select name="AM/PM" id="am/pm1">
                     <option>a.m.</option>
                     <option>p.m.</option>
                 </select>
 
                 <label class="label" id="end-time">End Time: </label>
-                <select name="Time" id="time">
+                <select name="Time" id="end-selection">
                     <option>12:00</option>
                     <option>12:30</option>
                     <option>1:00</option>
@@ -123,7 +105,7 @@
                     <option>11:30</option>
                 </select>
 
-                <select name="AM/PM" id="am/pm">
+                <select name="AM/PM" id="am/pm2">
                     <option>a.m.</option>
                     <option>p.m.</option>
                 </select>
