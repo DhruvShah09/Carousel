@@ -260,8 +260,12 @@ def forgot():
 #abstractions
 @app.route('/homepage', methods=['GET', 'POST'])
 def home():
-    try:
+    #try:
         if session['login_state'] == True:
+            if request.method == 'POST':
+                remove_event(int(session['user_id']), request.form['leaves'])
+            if not(find_event(int(session['user_id']))):
+                return render_template('homepagety.html')
             usr = create_user_object(int(session['user_id']))
             tableval = []
             eventnames = []
@@ -270,8 +274,10 @@ def home():
             eventparticipants = []
             eventlocation = []
             eventclass = []
-            for a in usr.events:
+            eventids = []
+            for a in find_event(int(session['user_id'])):
                 temp_event = get_event(int(a))
+                eventids.append(temp_event.id)
                 eventnames.append(temp_event.name)
                 eventstarts.append(str(datetime.utcfromtimestamp(temp_event.start_time).strftime('%Y-%m-%d %H:%M:%S')))
                 eventends.append(str(datetime.utcfromtimestamp(temp_event.start_time).strftime('%Y-%m-%d %H:%M:%S')))
@@ -280,10 +286,9 @@ def home():
                 eventclass.append(temp_event.class_)
                 tableval.append(str(get_event(int(a))))
             iternum = len(eventnames)
-            print(tableval)
-            return render_template('homepage.html', eventnames=eventnames, eventstarts=eventstarts, eventends=eventends, eventparticipants=eventparticipants, eventlocation=eventlocation, eventclass=eventclass, iternum=iternum)
-    except:
-        return redirect(url_for('login'))
+            return render_template('homepage.html', eventnames=eventnames, eventstarts=eventstarts, eventends=eventends, eventparticipants=eventparticipants, eventlocation=eventlocation, eventclass=eventclass, iternum=iternum, eventids=eventids)
+    #except:
+        #pass
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
     if request.method == 'POST':
@@ -308,17 +313,11 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 #jk = User(00000000)
 #print(jk)
 
-<<<<<<< Updated upstream
-#new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
-=======
-new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("dshah374@gatech.edu"),"CULC","MATH 1554")
-new_study("English Research Symposium",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"Crosland Tower","ENGL 1102")
->>>>>>> Stashed changes
+new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
 #print(current_events[-1])
 #new_sport("Pickup Football",1634971424,1634974424,get_user("jkeller45@gatech.edu"),"Stamps Field","Football")
 #print(current_events[-1])
-#new_study("Linear Algebra Cram 3",1634961424,1634964424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
-#new_sport("Linear Algebra Cram 4",1634981424,1634984424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
+new_study("Linear Algebra Cram 3",1634961424,1634964424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
 #print(get_user("jkeller44@gatech.edu"))
 #print(current_events[0])
 #print(current_events)
@@ -364,6 +363,16 @@ def remove_event(compare, remove):
                     b.writerow(row)
         except:
             pass
+def find_event(compare):
+    with(open('user_data.csv', 'r', newline='')) as f:
+        try:
+            a = csv.reader(f, delimiter=',')
+            for row in a:
+                events = row[6].split(':')
+                if str(compare) == row[0]:
+                    return events
+        except:
+            pass
 def flush_events():
     with(open('user_data.csv', 'r', newline='')) as f:
         try:
@@ -387,9 +396,9 @@ def flush_events():
         
 #edit_user(55242536,[55242536,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101",get_event_ids(get_row("jkeller44@gatech.edu"))])
 #change_classes(55242536,"MATH 1554:ENGL 1101")
-flush_events()
+#flush_events()
 #print(current_ids)
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    #app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000)
