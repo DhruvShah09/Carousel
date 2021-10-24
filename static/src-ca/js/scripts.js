@@ -316,7 +316,7 @@ function sendPostRequest() {
         if (date.value != "") {
             console.log("post request activated");
             convertToUnix();
-            if (unixStart == NaN || unixEnd == NaN) {
+            if (isNaN(unixStart) || isNaN(unixEnd)) {
                 throw "Unix Value for Start/End Time is Not a Number."
             }
 
