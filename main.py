@@ -230,7 +230,7 @@ def login():
         pwd = request.form['password']
         if login_query(userName, pwd):
             session['login_state'] = True
-            session['user_id'] = userName
+            session['user_id'] = get_id(userName)
             return "Succesfully Logged In"
         else:
             error = 'Invalid Credentials'
@@ -244,12 +244,17 @@ def forgot():
     return render_template('forgot.html')
 #abstractions 
 
-def rideCarousel(time, class_):
+def rideCarouselEventDisplay(time, class_, time_two, location):
     arr_to_display = search_events(time, class_)
     if arr_to_display is empty:
-        name 
-        new_study(name, start_time, end_time, owner, location, class_)
-    pass
+        usr = create_user_object(session['user_id'])
+        name = usr.name
+        start_time = time
+        end_time = time_two
+        owner = usr.username
+        loc = location
+        arr_to_display.append(new_study(name, start_time, end_time, owner, loc, class_))
+    return arr_to_display
 
 #Testing code
 #jk = User(00000000)
