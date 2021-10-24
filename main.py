@@ -89,6 +89,26 @@ def create_user_object(id):
         if id in current_ids[x]:
             return User(id)
 
+def get_row(username):
+    for x in range(len(current_ids)):
+        if username in current_ids[x]:
+            return current_ids[x][0]
+
+def get_id(username):
+    for x in range(len(current_ids)):
+        if username in current_ids[x]:
+            return current_ids[x][1]
+
+def get_username(id):
+    for x in range(len(current_ids)):
+        if username in current_ids[x]:
+            return current_ids[x][2]
+
+def get_user(name):
+    for x in range(len(current_ids)):
+        if name in current_ids[x]:
+            return User(current_ids[x][0])
+
 def new_user(username,password,name,year,classes):
     global temp_str
     global data
@@ -125,9 +145,11 @@ def add_event_to_user(id,arr,event):
         edit_user(id,temp_arr)
 
 def change_classes(id,new_classes):
-    for x in range(len(current_ids)):
-        if id in current_ids[x]:
-            print("hi")
+    global temp_arr
+    r = get_row(id)
+    temp_arr = data[r]
+    temp_arr[5] = new_classes
+    edit_user(id,temp_arr)
 
 def classes_to_str(classes):
     global temp_str
@@ -153,13 +175,8 @@ def search_events(start_time,class_):
             temp_arr.append(x)
     return temp_arr
 
-def find_user(name):
-    for x in range(len(current_ids)):
-        if name in current_ids[x]:
-            return User(current_ids[x][0])
-
-def get_event_ids(user):
-    return data[user][6]
+def get_event_ids(row):
+    return data[row][6]
 
 def push_event(events,num):
     if events == []:
@@ -181,9 +198,7 @@ def login_query(username,password):
     global data
     global row_
     temp_index = -1
-    for x in range(len(current_ids)):
-        if username in current_ids[x]:
-            row_ = current_ids[x][0]
+    row_ = get_row(username)
     if data[row_][2] == password and data[row_][1] == username:
         return True
     else:
@@ -226,12 +241,12 @@ def login():
 #jk = User(00000000)
 #print(jk)
 
-#new_study("Linear Algebra Cram 1",1634970424,1634973424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
+#new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 #print(current_events[-1])
-#new_sport("Pickup Football",1634971424,1634974424,find_user("jkeller45@gatech.edu"),"Stamps Field","Football")
+#new_sport("Pickup Football",1634971424,1634974424,get_user("jkeller45@gatech.edu"),"Stamps Field","Football")
 #print(current_events[-1])
-#new_study("Linear Algebra Cram 3",1634961424,1634964424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
-#new_sport("Linear Algebra Cram 4",1634981424,1634984424,find_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
+#new_study("Linear Algebra Cram 3",1634961424,1634964424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
+#new_sport("Linear Algebra Cram 4",1634981424,1634984424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 
 #print(search_events(1634970424,"MATH 1554"))
 #print(current_events[-1])
@@ -244,7 +259,8 @@ def login():
 #join_event(57579823,current_events[0])
 #print(current_events[0])
 
-#edit_user(57579823,[57579823,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101",get_event_ids(find_user("jkeller44@gatech.edu")))
+#edit_user(55242536,[55242536,"jkeller44@gatech.edu","dumbass46","Jack Keller",1,"MATH 1554:ENGL 1101:CS 1100:CS 1331:POL 1101",get_event_ids(get_row("jkeller44@gatech.edu"))])
+#change_classes(55242536,"MATH 1554:ENGL 1101")
 
 #print(current_ids)
 
