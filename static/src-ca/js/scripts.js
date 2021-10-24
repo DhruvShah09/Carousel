@@ -73,112 +73,130 @@ function addDateItem() {
 // //start and end times:
 // // for (var i = 1; i <= 2; i++) {
 // //     var time = document.getElementById(i == 1 ? "start" : "end" + "-selection");
-    var time1 = document.getElementById("start-selection");
-    var timeadd;
-    var timeadd1;
-    var frontend = "";
+var time1 = document.getElementById("start-selection");
+var timeadd;
+var timeadd1;
+var frontend = "";
 
-    var startTime = time1.value.substring(0, 2);
-    var backend = time1.value.substring(2);
-    if (startTime.charAt(2) == ':') {
-        startTime = startTime.substring(0, 1);
-        backend = time1.value.substring(1);
-    }
-
-
-    var useStartTime = parseInt(startTime);
-    
-    var ap1 = document.getElementById("am/pm1");
-    if(ap1.value == "p.m.") {
-        timeadd = " p.m.";
-        timeadd1 = 12;
-    }
-    else {
-        timeadd = " a.m."
-        timeadd1 = 0;
-    }
- var timeComp = useStartTime + timeadd1;
-    if (time1.value == 12) {
-        useStartTime = 0;
-    }
-    if(timeComp < 10 && timeadd == " a.m.") {
-        frontend = "0"
-    }
-    console.log(frontend + (useStartTime + timeadd1) + backend);
-
-
-    if (time1 != null) {
-        time1.addEventListener("click", function() {
-            var options = time1.querySelectorAll("option");
-            var count = options.length;
-            if(typeof(count) === "undefined" || count < 2)
-            {
-                addTimeItem();
-            }
-        });
-    }
-
-    if (time1 != null) {
-        time1.addEventListener("change", addTimeItem, false);
-     }
-
-     if(ap1 != null) {
-         ap1.addEventListener("change", addTimeItem, false);
-     }
-    
-    function addTimeItem() {
-    //     if (i == 1) {
-    //         console.log(time1.value);
-    //     } else {
-    //         var finalEndTime = time1.value;
-    //         console.log(finalEndTime);
-    //     }
-
-//convertToUnix();}
-    startTime = time1.value.substring(0, 2);
+var startTime = time1.value.substring(0, 2);
+var backend = time1.value.substring(2);
+if (startTime.charAt(1) == ':') {
+    startTime = startTime.substring(0, 1);
     backend = time1.value.substring(1);
-    if (startTime.charAt(2) == ':') {
-        startTime = startTime.substring(0, 1);
-        backend = time1.value.substring(0);
-    }
+}
 
 
-    useStartTime = parseInt(startTime);
+var useStartTime = parseInt(startTime);
 
-    
-    ap1 = document.getElementById("am/pm1");
-    if(ap1.value == "p.m.") {
-        timeadd = " p.m.";
-        timeadd1 = 12;
-    }
-    else {
-        timeadd = " a.m."
-        timeadd1 = 0;
-    }
-
-    timeComp = useStartTime + timeadd1;
-    console.log(timeComp);
-
-    if (time1.value + timeadd == "12 a.m.") {
-        useStartTime = 0;
-    }
-    console.log(useStartTime + timeadd1 + backend);
-
+var ap1 = document.getElementById("am/pm1");
 if(ap1.value == "p.m.") {
     timeadd = " p.m.";
+    timeadd1 = 12;
 }
 else {
     timeadd = " a.m."
+    timeadd1 = 0;
+}
+if (time1.value == 12) {
+    useStartTime = 0;
+}
+var timeComp = useStartTime + timeadd1;
+
+if(timeComp < 10 && timeadd == " a.m.") {
+    frontend = "0";
+}
+else { 
+    frontend = "";
 }
 
 
-    if(timeComp < 10 && timeadd == " a.m.") {
-        frontend = "0"
-    }
-    else {
-        frontend = "";
-    }
-    var startTimeFinal = (frontend + (useStartTime + timeadd1) + backend);
+if (time1 != null) {
+    time1.addEventListener("click", function() {
+        var options = time1.querySelectorAll("option");
+        var count = options.length;
+        if(typeof(count) === "undefined" || count < 2)
+        {
+            addTimeItem();
+        }
+    });
+}
+
+if (time1 != null) {
+    time1.addEventListener("change", addTimeItem2, false);
+ }
+
+ if(ap1 != null) {
+     ap1.addEventListener("change", addTimeItem2, false);
+ }
+
+function addTimeItem2() {
+//     if (i == 1) {
+//         console.log(time1.value);
+//     } else {
+//         var finalEndTime = time1.value;
+//         console.log(finalEndTime);
+//     }
+
+//convertToUnix();}
+startTime = time1.value.substring(0, 2);
+
+backend = time1.value.substring(2);
+
+if (startTime.charAt(1) == ':') {
+    startTime = startTime.substring(0, 1);
+    backend = time1.value.substring(1);
+}
+
+
+useStartTime = parseInt(startTime);
+
+
+
+ap1 = document.getElementById("am/pm1");
+if(ap1.value == "p.m.") {
+    timeadd = " p.m.";
+    timeadd1 = 12;
+}
+else {
+    timeadd = " a.m."
+    timeadd1 = 0;
+}
+
+timeComp = useStartTime + timeadd1;
+
+
+
+if (useStartTime==12) {
+    useStartTime = 0;
+}
+
+
+
+
+if(ap1.value == "p.m.") {
+timeadd = " p.m.";
+}
+else {
+timeadd = " a.m.";
+}
+
+
+if(timeComp < 10 && timeadd == " a.m.") {
+    frontend = "0";
+}
+else {
+    frontend = "";
+}
+
+
+var startTimeFinal = (frontend + (useStartTime + timeadd1) + backend);
+if (useStartTime == 0 && timeadd == " a.m.") {
+    startTimeFinal = "00" + backend;
+}
+else if (useStartTime == 0 && timeadd == " p.m.") {
+    startTimeFinal = "12" + backend;
+}
+console.log(startTimeFinal);
 }
     // }
 
@@ -189,7 +207,7 @@ else {
 
     var endTime = time2.value.substring(0, 2);
     var backend2 = time2.value.substring(2);
-    if (endTime.charAt(2) == ':') {
+    if (endTime.charAt(1) == ':') {
         endTime = endTime.substring(0, 1);
         backend2 = time2.value.substring(1);
     }
@@ -206,14 +224,17 @@ else {
         timeadd2 = " a.m."
         timeadd3 = 0;
     }
- var timeComp2 = useEndTime + timeadd3;
     if (time2.value == 12) {
         useEndTime = 0;
     }
+ var timeComp2 = useEndTime + timeadd3;
+
     if(timeComp2 < 10 && timeadd2 == " a.m.") {
-        frontend2 = "0"
+        frontend2 = "0";
     }
-    console.log(frontend2 + (useEndTime + timeadd3) + backend2);
+    else { 
+        frontend2 = "";
+    }
 
 
     if (time2 != null) {
@@ -245,14 +266,17 @@ else {
 
 //convertToUnix();}
     endTime = time2.value.substring(0, 2);
-    backend2 = time2.value.substring(1);
-    if (endTime.charAt(2) == ':') {
+
+    backend2 = time2.value.substring(2);
+
+    if (endTime.charAt(1) == ':') {
         endTime = endTime.substring(0, 1);
-        backend2 = time2.value.substring(0);
+        backend2 = time2.value.substring(1);
     }
 
 
     useEndTime = parseInt(endTime);
+
 
     
     ap2 = document.getElementById("am/pm2");
@@ -268,26 +292,37 @@ else {
     timeComp2 = useEndTime + timeadd3;
 
 
-    if (time2.value + timeadd2 == "12 a.m.") {
+
+    if (useEndTime==12) {
         useEndTime = 0;
     }
+
+
 
 
 if(ap2.value == "p.m.") {
     timeadd2 = " p.m.";
 }
 else {
-    timeadd2 = " a.m."
+    timeadd2 = " a.m.";
 }
 
 
     if(timeComp2 < 10 && timeadd2 == " a.m.") {
-        frontend2 = "0"
+        frontend2 = "0";
     }
     else {
         frontend2 = "";
     }
+
+
     var endTimeFinal = (frontend2 + (useEndTime + timeadd3) + backend2);
+    if (useEndTime == 0 && timeadd2 == " a.m.") {
+        endTimeFinal = "00" + backend2;
+    }
+    else if (useEndTime == 0 && timeadd2 == " p.m.") {
+        endTimeFinal = "12" + backend2;
+    }
     console.log(endTimeFinal);
 }
 
