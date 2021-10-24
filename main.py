@@ -214,6 +214,11 @@ def date_to_unix(year,month,day,hour,minute):
     dt = datetime(year,month,day,hour,minute,0)
     return str(int(dt.replace().timestamp()))
 
+def clear_expired_events():
+    for x in current_events:
+        if x.end_time >= time.time():
+            current_events.remove(x)
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
