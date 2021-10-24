@@ -243,6 +243,12 @@ def usraccount():
 def forgot():
     return render_template('forgot.html')
 #abstractions 
+@app.route('/homepage', methods=['GET', 'POST'])
+def home():
+    return render_template('homepage.html')
+@app.route('/carousel', methods=['GET', 'POST'])
+def carousel():
+    return render_template('carousel.html')
 
 def rideCarouselEventDisplay(time, class_, time_two, location):
     arr_to_display = search_events(time, class_)
