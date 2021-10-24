@@ -166,7 +166,7 @@ def classes_to_str(classes):
 
 def new_study(name,start_time,end_time,owner,location,class_):
     current_events.append(Study(name,start_time,end_time,owner,location,class_))
-    add_event_to_user(owner.id,data[get_row(owner.id)],current_events[-1].id)
+    add_event_to_user(owner.id,data[get_row(owner.id)],int(current_events[-1].id))
 
 def new_sport(name,start_time,end_time,owner,location,sport):
     current_events.append(Sport(name,start_time,end_time,owner,location,sport))
@@ -214,6 +214,11 @@ def date_to_unix(year,month,day,hour,minute):
     dt = datetime(year,month,day,hour,minute,0)
     return str(int(dt.replace().timestamp()))
 
+def clear_expired_events():
+    for x in current_events:
+        if x.end_time >= time.time():
+            current_events.remove(x)
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
@@ -234,7 +239,6 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
     error = None
     if request.method == 'POST':
         userName = request.form['username']
@@ -259,16 +263,30 @@ def forgot():
 @app.route('/homepage', methods=['GET', 'POST'])
 def home():
     usr = create_user_object(int(session['user_id']))
-    data = []
+    tableval = []
+    eventnames = []
+    eventstarts = []
+    eventends = []
+    eventparticipants = []
+    eventlocation = []
+    eventclass = []
     for a in usr.events:
-        data.append(a)
-    print(data)
-    return render_template('homepage.html', data=data)
+        temp_event = get_event(int(a))
+        eventnames.append(temp_event.name)
+        eventstarts.append(temp_event.start_time)
+        eventends.append(temp_event.end_time)
+        eventparticipants.append(temp_event.people_names)
+        eventlocation.append(temp_event.location)
+        eventclass.append(temp_event.class_)
+        tableval.append(str(get_event(int(a))))
+    print(tableval)
+    return render_template('homepage.html', tableval=tableval)
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
     if request.method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
+
     return render_template('carousel.html')
 
 def rideCarouselEventDisplay(time, class_, time_two, location):
@@ -287,7 +305,7 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 #jk = User(00000000)
 #print(jk)
 
-#new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
+new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
 #print(current_events[-1])
 #new_sport("Pickup Football",1634971424,1634974424,get_user("jkeller45@gatech.edu"),"Stamps Field","Football")
 #print(current_events[-1])
