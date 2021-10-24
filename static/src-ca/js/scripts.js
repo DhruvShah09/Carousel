@@ -334,7 +334,7 @@ function sendPostRequest() {
             }
 
             console.log("7");
-            xhr.send();
+            xhr.send(formData);
             //send unixStart & unixEnd
 
             console.log("post request successful");

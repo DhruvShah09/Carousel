@@ -295,11 +295,10 @@ def home():
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
     if request.method == 'POST':
-        start_time = request.form['start']
-        end_time = request.form['finish']
+        print(request.get_data())
     usr = create_user_object(int(session['user_id']))
     for class_ in usr.classes:
-        available = rideCarouselEventDisplay(1634970424, class_, 1634973424, 'CULC')
+        available = rideCarouselEventDisplay(')
         eventnames = []
         eventstarts = []
         eventends = []
