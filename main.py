@@ -50,7 +50,7 @@ class User:
         self.events = str(data[row][6]).split(":")
 
     def __str__(self):
-        return str(self.id) + ", " + self.username + ", " + self.password + ", " + self.name + ", " + str(self.year) + ", " + str(self.classes)
+        return str(self.id) + ", " + self.username + ", " + self.password + ", " + self.name + ", " + str(self.year) + ", " + str(self.classes) + ", " + str(self.events)
 
 class Event:
     def __init__(self,name,start_time,end_time,owner,location):
@@ -161,6 +161,7 @@ def classes_to_str(classes):
 
 def new_study(name,start_time,end_time,owner,location,class_):
     current_events.append(Study(name,start_time,end_time,owner,location,class_))
+    add_event_to_user(owner.id,data[get_row(owner.id)],current_events[-1].id)
 
 def new_sport(name,start_time,end_time,owner,location,sport):
     current_events.append(Sport(name,start_time,end_time,owner,location,sport))
@@ -270,13 +271,14 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 #jk = User(00000000)
 #print(jk)
 
-#new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
+#new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller44@gatech.edu"),"CULC","MATH 1554")
 #print(current_events[-1])
 #new_sport("Pickup Football",1634971424,1634974424,get_user("jkeller45@gatech.edu"),"Stamps Field","Football")
 #print(current_events[-1])
 #new_study("Linear Algebra Cram 3",1634961424,1634964424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 #new_sport("Linear Algebra Cram 4",1634981424,1634984424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
 
+#print(User(55242536))
 #print(search_events(1634970424,"MATH 1554"))
 #print(current_events[-1])
 
@@ -293,6 +295,6 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 
 #print(current_ids)
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    #app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000)
