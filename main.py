@@ -204,6 +204,10 @@ def login_query(username,password):
     else:
         return False
 
+def date_to_unix(year,month,day,hour,minute):
+    dt = datetime(year,month,day,hour,minute,0)
+    return str(int(dt.replace().timestamp()))
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
@@ -242,7 +246,7 @@ def usraccount():
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     return render_template('forgot.html')
-#abstractions 
+#abstractions
 @app.route('/homepage', methods=['GET', 'POST'])
 def home():
     return render_template('homepage.html')
@@ -289,6 +293,6 @@ def rideCarouselEventDisplay(time, class_, time_two, location):
 
 #print(current_ids)
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+    #app.run(threaded=True, port=5000)
