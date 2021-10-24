@@ -338,7 +338,7 @@ function sendPostRequest() {
             };
 
             xhr.open('POST', 'http://127.0.0.1:5000/carousel', true);
-            xhr.send();
+            xhr.send(formData);
             //send unixStart & unixEnd
 
             console.log("post request successful");
