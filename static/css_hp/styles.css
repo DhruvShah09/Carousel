@@ -331,6 +331,8 @@ th {
 
 label {
   display: inline-block;
+  justify-content: center;
+  padding-left: 10px;
 }
 
 button {
@@ -363,6 +365,7 @@ select {
 
 select {
   word-wrap: normal;
+  justify-content: center;
 }
 select:disabled {
   opacity: 1;
@@ -638,6 +641,9 @@ progress {
   padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
   margin-left: auto;
+  padding-top: 10px;
+  font-weight: 200%;
+  font-size: large;
 }
 
 @media (min-width: 576px) {
@@ -7837,7 +7843,6 @@ textarea.form-control-lg {
   height: 500px;
   align-items: center;
   justify-content: center;
- 
 
 
 

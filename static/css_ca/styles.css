@@ -638,6 +638,8 @@ progress {
   padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
   margin-left: auto;
+  font-weight: 200%;
+  font-size: large;
 }
 
 @media (min-width: 576px) {
