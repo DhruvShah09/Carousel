@@ -229,13 +229,16 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    new_study("Linear Algebra Cram 1",1634970424,1634973424,get_user("jkeller45@gatech.edu"),"CULC","MATH 1554")
     error = None
     if request.method == 'POST':
         userName = request.form['username']
         pwd = request.form['password']
         if login_query(userName, pwd):
             session['login_state'] = True
-            session['user_id'] = get_id(userName)
+            id_str = str(get_id(userName))
+            print(id_str)
+            session['user_id'] = id_str
             return "Succesfully Logged In"
         else:
             error = 'Invalid Credentials'
@@ -247,18 +250,31 @@ def usraccount():
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     return render_template('forgot.html')
+<<<<<<< Updated upstream
 #abstractions
+=======
+
+#abstractions 
+>>>>>>> Stashed changes
 @app.route('/homepage', methods=['GET', 'POST'])
 def home():
-    return render_template('homepage.html')
+    usr = create_user_object(int(session['user_id']))
+    data = []
+    for a in usr.events:
+        data.append(a)
+    print(data)
+    return render_template('homepage.html', data=data)
 @app.route('/carousel', methods=['GET', 'POST'])
 def carousel():
+    if method == 'POST': 
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
     return render_template('carousel.html')
 
 def rideCarouselEventDisplay(time, class_, time_two, location):
     arr_to_display = search_events(time, class_)
     if arr_to_display is empty:
-        usr = create_user_object(session['user_id'])
+        usr = create_user_object(int(session['user_id']))
         name = usr.name
         start_time = time
         end_time = time_two
