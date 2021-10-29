@@ -298,7 +298,7 @@ def carousel():
         print(request.get_data())
     usr = create_user_object(int(session['user_id']))
     for class_ in usr.classes:
-        available = rideCarouselEventDisplay(')
+        available = rideCarouselEventDisplay()
         eventnames = []
         eventstarts = []
         eventends = []
