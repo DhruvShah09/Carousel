@@ -1,4 +1,9 @@
 # Carousel
+
+## To view our devpost submission, click here! 
+
+https://devpost.com/software/carousel-743ny6
+
 ## Description
 Carousel is a tool which embraces the academic culture at Georgia Tech, or any University, and allows students to find study groups for any particular class, at any particular time. 
 Users first create an account, and in the process define their year, classes, and other attributes such as username, account name, and password. By "Riding the Carousel",
