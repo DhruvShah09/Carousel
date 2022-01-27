@@ -1,5 +1,8 @@
 # Carousel
 
+
+https://user-images.githubusercontent.com/90000344/151452116-329888fb-2549-4086-9154-c6841a38b1dc.mp4
+
 ## To view our devpost submission, click here! 
 
 https://devpost.com/software/carousel-743ny6
